@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>کتاب جامع پروژه N3XUS | جنگ الکترونیک با ESP32</title>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/iran-sans@v1.0.0/iran-sans.css" rel="stylesheet" />
+
+    <style>
+        /* ============================================
+           DESIGN SYSTEM - N3XUS ULTIMATE
+           ============================================ */
+        :root {
+            --color-bg: #f0f3fc;
+            --color-bg-card: #ffffff;
+            --color-bg-card-hover: #e8edf9;
+            --color-text-primary: #1a1a2e;
+            --color-text-secondary: #2a2a4a;
+            --color-text-muted: #5a5a7a;
+            --color-border: #d5def5;
+            --color-accent: #354AC4;
+            --color-accent-hover: #2a3aa0;
+            --color-accent-light: #e8ecf9;
+            --color-accent-glow: rgba(53, 74, 196, 0.15);
+            --color-success: #0f7b3a;
+            --color-warning: #b45309;
+            --color-code-bg: #0e1a2a;
+            --color-code-text: #e6edf5;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --font-body: 'Vazirmatn', 'Tahoma', sans-serif;
+            --font-heading: 'IranSans', 'Vazirmatn', 'Tahoma', sans-serif;
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-border);
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-accent);
+            border-radius: 20px;
+        }
+
+        ::selection {
+            background: var(--color-accent);
+            color: #ffffff;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .site-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-sm) var(--space-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition-smooth);
+            box-shadow: 0 2px 20px var(--color-accent-glow);
+        }
+
+        .site-header .brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .site-header .brand .brand-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--color-accent);
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+            transition: var(--transition-bounce);
+            box-shadow: 0 0 20px var(--color-accent-glow);
+        }
+
+        .site-header .brand .brand-mark:hover {
+            transform: rotate(8deg) scale(1.05);
+            box-shadow: 0 0 40px var(--color-accent-glow);
+        }
+
+        .site-header .brand .brand-text {
+            font-family: var(--font-heading);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 800;
+            color: var(--color-text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .site-header .brand .brand-text span {
+            color: var(--color-accent);
+        }
+
+        .site-header .brand .badge {
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            background: var(--color-bg);
+            padding: 2px var(--space-sm);
+            border-radius: 30px;
+            border: 1px solid var(--color-border);
+            margin-right: var(--space-xs);
+            letter-spacing: 0.3px;
+        }
+
+        .site-header .header-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .site-header .header-controls button {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            letter-spacing: 0.2px;
+        }
+
+        .site-header .header-controls button:hover {
+            background: var(--color-accent);
+            color: #ffffff;
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px var(--color-accent-glow);
+        }
+
+        .site-header .header-controls .toc-toggle-btn {
+            background: var(--color-accent);
+            color: #ffffff;
+            border-color: var(--color-accent);
+            padding: var(--space-sm) var(--space-md);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            border-radius: 30px;
+            box-shadow: 0 4px 16px var(--color-accent-glow);
+        }
+
+        .site-header .header-controls .toc-toggle-btn:hover {
+            background: var(--color-accent-hover);
+            border-color: var(--color-accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px var(--color-accent-glow);
+        }
+
+        /* ============================================
+           SIDEBAR
+           ============================================ */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(53, 74, 196, 0.20);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 90;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 380px;
+            height: 100vh;
+            background: var(--color-bg-card);
+            box-shadow: 0 0 60px rgba(53, 74, 196, 0.20);
+            padding: var(--space-lg) var(--space-md);
+            overflow-y: auto;
+            z-index: 99;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-left: 1px solid var(--color-border);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: var(--space-md);
+        }
+
+        .sidebar-header .brand-text {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-header .brand-text span {
+            color: var(--color-accent);
+        }
+
+        .sidebar-header .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: 0 var(--space-xs);
+            line-height: 1;
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-header .close-btn:hover {
+            color: var(--color-accent);
+            transform: rotate(90deg);
+        }
+
+        .toc-group-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-muted);
+            padding: var(--space-sm) var(--space-md) var(--space-xs) var(--space-md);
+        }
+
+        .toc-divider {
+            height: 1px;
+            background: var(--color-border);
+            margin: var(--space-xs) var(--space-md);
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .toc-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            border: 1px solid transparent;
+        }
+
+        .toc-list li:hover {
+            background: var(--color-bg-card-hover);
+            color: var(--color-text-primary);
+            transform: translateX(-4px);
+        }
+
+        .toc-list li.active {
+            background: var(--color-accent-light);
+            border-color: var(--color-accent);
+            color: var(--color-text-primary);
+            box-shadow: 0 0 0 3px var(--color-accent-glow);
+        }
+
+        .toc-list li .page-num {
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            background: var(--color-bg);
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid var(--color-border);
+            transition: var(--transition-smooth);
+        }
+
+        .toc-list li.active .page-num {
+            background: var(--color-accent);
+            color: #ffffff;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 12px var(--color-accent-glow);
+        }
+
+        .toc-list li .toc-title {
+            flex: 1;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .app {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: var(--space-xl) var(--space-2xl) var(--space-2xl) var(--space-2xl);
+        }
+
+        .main-content {
+            min-height: 70vh;
+        }
+
+        /* ============================================
+           TOP BAR
+           ============================================ */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .top-bar .progress-wrap {
+            flex: 1;
+            min-width: 60px;
+            height: 4px;
+            background: var(--color-border);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .top-bar .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+            border-radius: 20px;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            box-shadow: 0 0 20px var(--color-accent-glow);
+        }
+
+        .top-bar .progress-bar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .top-bar .progress-text {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            min-width: 36px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .top-bar .controls {
+            display: flex;
+            gap: var(--space-xs);
+            align-items: center;
+        }
+
+        .top-bar .controls button {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .top-bar .controls button:hover {
+            background: var(--color-accent);
+            color: #ffffff;
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--color-accent-glow);
+        }
+
+        /* ============================================
+           PAGES
+           ============================================ */
+        .page-content {
+            display: none;
+            animation: fadeSlide 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-content .page-header {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .page-content .page-header .page-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xs);
+        }
+
+        .page-content .page-header .page-meta .page-tag {
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: var(--color-accent);
+            padding: 2px var(--space-md);
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            box-shadow: 0 0 12px var(--color-accent-glow);
+        }
+
+        .page-content .page-header .page-meta .page-number {
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        .page-content h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--color-text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .page-content h1 .highlight {
+            color: var(--color-accent);
+            position: relative;
+        }
+
+        .page-content h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--color-accent);
+            opacity: 0.2;
+            border-radius: 10px;
+        }
+
+        .page-content h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+            font-weight: 700;
+            margin-top: var(--space-2xl);
+            margin-bottom: var(--space-sm);
+            color: var(--color-text-primary);
+            border-right: 4px solid var(--color-accent);
+            padding-right: var(--space-md);
+            letter-spacing: -0.2px;
+        }
+
+        .page-content h3 {
+            font-family: var(--font-heading);
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            font-weight: 600;
+            margin-top: var(--space-lg);
+            margin-bottom: var(--space-xs);
+            color: var(--color-text-secondary);
+        }
+
+        .page-content p {
+            margin-bottom: var(--space-md);
+            color: var(--color-text-secondary);
+            font-size: clamp(0.95rem, 1.1vw, 1rem);
+            line-height: 2.2;
+        }
+
+        .page-content ul,
+        .page-content ol {
+            padding-right: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .page-content li {
+            margin-bottom: var(--space-xs);
+            color: var(--color-text-secondary);
+            font-size: clamp(0.9rem, 1vw, 0.95rem);
+        }
+
+        .page-content li strong {
+            color: var(--color-text-primary);
+        }
+
+        /* ============================================
+           INFO BOXES
+           ============================================ */
+        .page-content .info-box {
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            margin: var(--space-md) 0;
+            border-right: 4px solid var(--color-accent);
+            background: var(--color-bg-card);
+            box-shadow: 0 2px 12px var(--color-accent-glow);
+            transition: var(--transition-smooth);
+        }
+
+        .page-content .info-box:hover {
+            box-shadow: 0 6px 28px rgba(53, 74, 196, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .page-content .info-box.warning {
+            border-right-color: var(--color-warning);
+            background: #fefaf0;
+        }
+
+        .page-content .info-box.success {
+            border-right-color: var(--color-success);
+            background: #f4fbf7;
+        }
+
+        .page-content .info-box .box-title {
+            font-weight: 700;
+            color: var(--color-text-primary);
+            display: block;
+            margin-bottom: var(--space-xs);
+            font-size: 0.92rem;
+            letter-spacing: -0.1px;
+        }
+
+        .page-content .info-box p {
+            margin-bottom: 0;
+            font-size: 0.92rem;
+        }
+
+        /* ============================================
+           CODE BLOCKS
+           ============================================ */
+        .page-content .code-block {
+            background: var(--color-code-bg);
+            color: var(--color-code-text);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+            line-height: 2;
+            margin: var(--space-md) 0;
+            direction: ltr;
+            text-align: left;
+            white-space: pre-wrap;
+            border: 1px solid var(--color-border);
+            box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-content .code-block .comment { color: #6a7e92; font-style: italic; }
+        .page-content .code-block .keyword { color: #7aa9f0; }
+        .page-content .code-block .string { color: #6fcf97; }
+        .page-content .code-block .func { color: #8cb4f5; }
+        .page-content .code-block .number { color: #f2c94a; }
+
+        /* ============================================
+           TABLES
+           ============================================ */
+        .page-content .table-wrap {
+            overflow-x: auto;
+            margin: var(--space-md) 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 2px 12px var(--color-accent-glow);
+        }
+
+        .page-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: clamp(0.8rem, 0.9vw, 0.85rem);
+        }
+
+        .page-content table th,
+        .page-content table td {
+            padding: var(--space-sm) var(--space-md);
+            text-align: right;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .page-content table th {
+            background: var(--color-bg);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--color-text-primary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .page-content table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .page-content table tr:hover td {
+            background: var(--color-bg-card-hover);
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+            gap: var(--space-md);
+        }
+
+        .nav-buttons button {
+            background: var(--color-bg);
+            color: var(--color-text-secondary);
+            border: 1px solid var(--color-border);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-buttons button:hover:not(:disabled) {
+            background: var(--color-accent);
+            color: #ffffff;
+            border-color: var(--color-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 28px var(--color-accent-glow);
+        }
+
+        .nav-buttons button:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .nav-buttons button.primary-btn {
+            background: var(--color-accent);
+            color: #ffffff;
+            border-color: var(--color-accent);
+            box-shadow: 0 4px 16px var(--color-accent-glow);
+        }
+
+        .nav-buttons button.primary-btn:hover:not(:disabled) {
+            background: var(--color-accent-hover);
+            border-color: var(--color-accent-hover);
+            box-shadow: 0 6px 32px var(--color-accent-glow);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .site-header { padding: var(--space-sm) var(--space-md); }
+            .site-header .brand .badge { display: none; }
+            .app { padding: var(--space-md); }
+            .page-content h1 { font-size: 1.6rem; }
+            .page-content h2 { font-size: 1rem; }
+            .sidebar { width: 280px; }
+            .nav-buttons button { padding: var(--space-xs) var(--space-md); font-size: 0.7rem; }
+        }
+
+        @media (max-width: 480px) {
+            .site-header .brand-text { font-size: 0.85rem; }
+            .site-header .header-controls .toc-toggle-btn span:last-child { display: none; }
+            .sidebar { width: 100%; }
+            .app { padding: var(--space-sm); }
+            .page-content h1 { font-size: 1.3rem; }
+        }
+
+        /* ============================================
+           PRINT
+           ============================================ */
+        @media print {
+            body { background: #ffffff !important; font-size: 11pt !important; color: #000000 !important; }
+            .site-header, .sidebar-overlay, .sidebar, .top-bar .controls,
+            .nav-buttons, .top-bar .progress-wrap, .top-bar .progress-text { display: none !important; }
+            .app { max-width: 100% !important; padding: 20px !important; background: #ffffff !important; }
+            .page-content { display: block !important; page-break-after: always !important; padding: 20px 0 !important; }
+            .page-content:last-child { page-break-after: avoid !important; }
+            .page-content .page-header { border-bottom: 2px solid #000000 !important; }
+            .page-content .page-header .page-meta .page-tag { background: #354AC4 !important; color: #ffffff !important; }
+            .page-content .page-header .page-meta .page-number { color: #555555 !important; }
+            .page-content h1 { font-size: 20pt !important; color: #000000 !important; }
+            .page-content h1 .highlight { color: #354AC4 !important; -webkit-text-fill-color: #354AC4 !important; }
+            .page-content h2 { font-size: 14pt !important; color: #000000 !important; border-right-color: #354AC4 !important; }
+            .page-content p { font-size: 10.5pt !important; color: #222222 !important; }
+            .page-content .info-box { border-right-color: #354AC4 !important; background: #f5f7fa !important; border: 1px solid #e0e0e0 !important; }
+            .page-content .code-block { background: #f5f5f5 !important; color: #1a1a2e !important; border: 1px solid #cccccc !important; }
+            .page-content .table-wrap { border: 1px solid #cccccc !important; }
+            .page-content table th { background: #f0f0f0 !important; color: #000000 !important; }
+            .page-content table td { color: #222222 !important; }
+            .donation-banner-wrapper { display: none !important; }
+        }
+
+        /* ============================================
+           DONATION BANNER
+           ============================================ */
+        .donation-banner-wrapper {
+            position: relative;
+            max-width: 100%;
+            width: 100%;
+            border-radius: 36px;
+            padding: 4px;
+            background: linear-gradient(135deg, #e8ecf9, #d5def5, #e8ecf9, #c5d0e8);
+            background-size: 300% 300%;
+            animation: gradientMove 8s ease-in-out infinite;
+            box-shadow: 0 0 80px rgba(53, 74, 196, 0.06);
+            margin: 2rem 0;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .donation-banner {
+            position: relative;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(28px);
+            border-radius: 34px;
+            padding: 40px 48px 36px;
+            overflow: hidden;
+            border: 1px solid rgba(53, 74, 196, 0.06);
+        }
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 6px;
+            border-radius: 2px;
+            opacity: 0;
+            animation: confettiFall 6s linear infinite;
+        }
+
+        .confetti:nth-child(1) { left: 5%; background: #ff6b6b; animation-delay: 0s; }
+        .confetti:nth-child(2) { left: 15%; background: #ffd93d; animation-delay: 0.8s; }
+        .confetti:nth-child(3) { left: 25%; background: #6bcb77; animation-delay: 1.6s; }
+        .confetti:nth-child(4) { left: 35%; background: #4d96ff; animation-delay: 2.4s; }
+        .confetti:nth-child(5) { left: 45%; background: #ff6bff; animation-delay: 3.2s; }
+        .confetti:nth-child(6) { left: 55%; background: #ffd93d; animation-delay: 0.4s; }
+        .confetti:nth-child(7) { left: 65%; background: #6bcb77; animation-delay: 1.2s; }
+        .confetti:nth-child(8) { left: 75%; background: #ff6b6b; animation-delay: 2s; }
+        .confetti:nth-child(9) { left: 85%; background: #4d96ff; animation-delay: 2.8s; }
+        .confetti:nth-child(10) { left: 95%; background: #ff6bff; animation-delay: 3.6s; }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-20px) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: translateY(10px) rotate(180deg) scale(1); }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(calc(100vh)) rotate(720deg) scale(0.3); opacity: 0; }
+        }
+
+        .donation-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .donation-title {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--color-text-primary);
+            line-height: 1.2;
+            font-family: var(--font-heading);
+            letter-spacing: -0.5px;
+        }
+
+        .donation-title .highlight {
+            background: linear-gradient(135deg, #354AC4, #4a6ad4, #6a8ae8);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMoveTitle 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientMoveTitle {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .donation-sub {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            max-width: 80%;
+            line-height: 2;
+        }
+
+        .donation-sub strong {
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .donation-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-top: 4px;
+            width: 100%;
+        }
+
+        .donate-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 20px 52px;
+            background: linear-gradient(135deg, #354AC4, #4a6ad4, #354AC4);
+            background-size: 200% 200%;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 800;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 50px rgba(53, 74, 196, 0.15);
+            animation: btnPulse 3s ease-in-out infinite;
+            min-width: 220px;
+            font-family: var(--font-body);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 8px 50px rgba(53, 74, 196, 0.15); transform: scale(1); }
+            50% { box-shadow: 0 8px 60px rgba(53, 74, 196, 0.25); transform: scale(1.01); }
+        }
+
+        .donate-btn::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            background: linear-gradient(135deg, #354AC4, #4a6ad4, #6a8ae8, #354AC4);
+            background-size: 300% 300%;
+            border-radius: 60px;
+            z-index: -1;
+            animation: gradientMove 6s ease-in-out infinite;
+            opacity: 0.2;
+            filter: blur(18px);
+        }
+
+        .donate-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 60%);
+            border-radius: 60px;
+            pointer-events: none;
+        }
+
+        .donate-btn:hover {
+            background: linear-gradient(135deg, #ffd93d, #ff6b6b, #ff6bff, #4d96ff);
+            background-size: 300% 300%;
+            animation: btnHoverGradient 1.5s ease-in-out infinite !important;
+            color: #02040c;
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 14px 70px rgba(255, 217, 61, 0.25);
+        }
+
+        .donate-btn:hover::before {
+            opacity: 0.4;
+            background: linear-gradient(135deg, #ffd93d, #ff6b6b, #ff6bff, #4d96ff);
+        }
+
+        @keyframes btnHoverGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .donate-btn:active { transform: scale(0.95) !important; }
+
+        .donate-btn .icon {
+            font-size: 28px;
+            line-height: 1;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .donate-btn:hover .icon {
+            transform: scale(1.2) rotate(-10deg);
+            filter: drop-shadow(0 0 30px rgba(255, 217, 61, 0.3));
+        }
+
+        .donate-btn .btn-text {
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .donate-btn:hover .btn-text {
+            letter-spacing: 1.5px;
+        }
+
+        .donate-btn .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            animation: rippleAnim 0.8s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnim {
+            to { transform: scale(7); opacity: 0; }
+        }
+
+        .donate-message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--color-text-muted);
+            font-size: 15px;
+            font-weight: 300;
+            background: rgba(53, 74, 196, 0.03);
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(53, 74, 196, 0.04);
+            transition: all 0.4s ease;
+            animation: messageDance 3s ease-in-out infinite;
+        }
+
+        @keyframes messageDance {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        .donate-message:hover {
+            background: rgba(53, 74, 196, 0.05);
+            border-color: rgba(53, 74, 196, 0.08);
+            transform: translateX(-4px);
+        }
+
+        .donate-message .emoji {
+            font-size: 22px;
+            animation: wiggle 4.5s infinite ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            20% { transform: rotate(14deg) scale(1.08); }
+            40% { transform: rotate(-10deg) scale(0.92); }
+            60% { transform: rotate(8deg) scale(1.04); }
+            80% { transform: rotate(-4deg) scale(0.98); }
+        }
+
+        .donate-message .highlight-msg {
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .donation-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(53, 74, 196, 0.04);
+            border: 1px solid rgba(53, 74, 196, 0.06);
+            padding: 6px 20px 6px 24px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--color-text-muted);
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(4px);
+        }
+
+        .donation-badge .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(53, 74, 196, 0.2);
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px rgba(53, 74, 196, 0.2); }
+            50% { opacity: 0.2; transform: scale(0.6); box-shadow: 0 0 5px rgba(53, 74, 196, 0.02); }
+        }
+
+        @media (max-width: 768px) {
+            .donation-banner { padding: 28px 20px 24px; border-radius: 26px; }
+            .donation-title { font-size: 26px; }
+            .donation-sub { max-width: 100%; font-size: 16px; }
+            .donation-footer { flex-direction: column; align-items: center; gap: 16px; }
+            .donate-btn { justify-content: center; padding: 16px 32px; font-size: 17px; width: 100%; min-width: unset; }
+            .donate-btn .icon { font-size: 24px; }
+            .donation-badge { font-size: 12px; padding: 4px 14px; }
+            .confetti { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .donation-banner { padding: 20px 14px 18px; border-radius: 20px; }
+            .donation-title { font-size: 20px; }
+            .donation-sub { font-size: 14px; }
+            .donate-btn { font-size: 15px; padding: 14px 20px; }
+            .donate-btn .icon { font-size: 20px; }
+            .donate-message { font-size: 13px; padding: 8px 14px; }
+            .donation-badge { font-size: 10px; padding: 4px 12px; }
+            .donation-badge .dot { width: 6px; height: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+    HEADER
+    ========================================== -->
+    <header class="site-header">
+        <div class="brand">
+            <div class="brand-mark"></div>
+            <div class="brand-text">
+                N3XUS <span>Ultimate Guide</span>
+                <span class="badge">ESP32 · NRF24 · CC1101</span>
+            </div>
+        </div>
+        <div class="header-controls">
+            <button class="toc-toggle-btn" id="tocToggleBtn">
+                <span>☰</span> <span>فهرست</span>
+            </button>
+            <button id="printBtn">چاپ</button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+    SIDEBAR OVERLAY
+    ========================================== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==========================================
+    SIDEBAR
+    ========================================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand-text">فهرست <span>مطالب</span></div>
+            <button class="close-btn" id="closeSidebarBtn">✕</button>
+        </div>
+
+        <div class="toc-group-label">مقدمه</div>
+        <ul class="toc-list">
+            <li data-index="0" class="active"><span class="page-num">۱</span><span class="toc-title">پیش‌گفتار</span></li>
+            <li data-index="1"><span class="page-num">۲</span><span class="toc-title">معرفی پروژه N3XUS</span></li>
+            <li data-index="2"><span class="page-num">۳</span><span class="toc-title">تاریخچه جنگ الکترونیک</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">مبانی</div>
+        <ul class="toc-list">
+            <li data-index="3"><span class="page-num">۴</span><span class="toc-title">شناخت قطعات</span></li>
+            <li data-index="4"><span class="page-num">۵</span><span class="toc-title">راهنمای خرید</span></li>
+            <li data-index="5"><span class="page-num">۶</span><span class="toc-title">آماده‌سازی محیط کار</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">نرم‌افزار</div>
+        <ul class="toc-list">
+            <li data-index="6"><span class="page-num">۷</span><span class="toc-title">نصب Arduino IDE</span></li>
+            <li data-index="7"><span class="page-num">۸</span><span class="toc-title">پیکربندی ESP32</span></li>
+            <li data-index="8"><span class="page-num">۹</span><span class="toc-title">نصب کتابخانه‌ها</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">فاز اول — NRF24</div>
+        <ul class="toc-list">
+            <li data-index="9"><span class="page-num">۱۰</span><span class="toc-title">نقشه اتصال NRF24</span></li>
+            <li data-index="10"><span class="page-num">۱۱</span><span class="toc-title">تست سلامت NRF24</span></li>
+            <li data-index="11"><span class="page-num">۱۲</span><span class="toc-title">عیب‌یابی فاز اول</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">فاز دوم — نمایشگر و کنترل</div>
+        <ul class="toc-list">
+            <li data-index="12"><span class="page-num">۱۳</span><span class="toc-title">افزودن TFT</span></li>
+            <li data-index="13"><span class="page-num">۱۴</span><span class="toc-title">افزودن دکمه‌ها</span></li>
+            <li data-index="14"><span class="page-num">۱۵</span><span class="toc-title">افزودن LEDها</span></li>
+            <li data-index="15"><span class="page-num">۱۶</span><span class="toc-title">کد اصلی N3XUS</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">فاز سوم — CC1101</div>
+        <ul class="toc-list">
+            <li data-index="16"><span class="page-num">۱۷</span><span class="toc-title">آشنایی با CC1101</span></li>
+            <li data-index="17"><span class="page-num">۱۸</span><span class="toc-title">اتصال CC1101</span></li>
+            <li data-index="18"><span class="page-num">۱۹</span><span class="toc-title">تست و راه‌اندازی</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">فاز چهارم — وب و ذخیره‌سازی</div>
+        <ul class="toc-list">
+            <li data-index="19"><span class="page-num">۲۰</span><span class="toc-title">پنل وب N3XUS</span></li>
+            <li data-index="20"><span class="page-num">۲۱</span><span class="toc-title">ذخیره‌سازی روی SD</span></li>
+            <li data-index="21"><span class="page-num">۲۲</span><span class="toc-title">اتصال به وای‌فای</span></li>
+        </ul>
+
+        <div class="toc-divider"></div>
+        <div class="toc-group-label">تکمیلی</div>
+        <ul class="toc-list">
+            <li data-index="22"><span class="page-num">۲۳</span><span class="toc-title">۱۲ حالت عملیاتی</span></li>
+            <li data-index="23"><span class="page-num">۲۴</span><span class="toc-title">عیب‌یابی پیشرفته</span></li>
+            <li data-index="24"><span class="page-num">۲۵</span><span class="toc-title">مقایسه با ابزارها</span></li>
+            <li data-index="25"><span class="page-num">۲۶</span><span class="toc-title">پرسش‌های متداول</span></li>
+            <li data-index="26"><span class="page-num">۲۷</span><span class="toc-title">پروژه‌های پیشنهادی</span></li>
+            <li data-index="27"><span class="page-num">۲۸</span><span class="toc-title">درباره من</span></li>
+            <li data-index="28"><span class="page-num">۲۹</span><span class="toc-title">پس‌گفتار</span></li>
+            <li data-index="29"><span class="page-num">۳۰</span><span class="toc-title">جمع‌بندی و منابع</span></li>
+        </ul>
+    </aside>
+
+    <!-- ==========================================
+    APP
+    ========================================== -->
+    <div class="app">
+        <main class="main-content">
+
+            <!-- ==========================================
+            TOP BAR
+            ========================================== -->
+            <div class="top-bar">
+                <div style="display:flex; align-items:center; gap:var(--space-sm); flex:1; min-width:60px;">
+                    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+                    <span class="progress-text" id="progressText">۰%</span>
+                </div>
+                <div class="controls">
+                    <button id="printBtnSmall">چاپ</button>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 1 — پیش‌گفتار                                              -->
+            <!-- ============================================================ -->
+            <div class="page-content active" id="page-0">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">شروع</span><span class="page-number">صفحه ۱ از ۳۰</span></div>
+                    <h1>پیش‌گفتار <span class="highlight">چرا این کتاب؟</span></h1>
+                </div>
+                <p>دنیای الکترونیک و ارتباطات بی‌سیم، یکی از هیجان‌انگیزترین و پرچالش‌ترین حوزه‌های فناوری است. هر روزه شاهد ظهور فناوری‌های جدیدی هستیم که زندگی ما را تحت تأثیر قرار می‌دهند. از گوشی‌های هوشمند و اینترنت اشیا گرفته تا سیستم‌های امنیتی و پهپادها، همه و همه به نوعی به ارتباطات بی‌سیم وابسته هستند.</p>
+                <p>این کتاب با هدف آشنا کردن شما با یکی از جذاب‌ترین بخش‌های این دنیا، یعنی <strong>پروژه N3XUS</strong>، نوشته شده است. این پروژه، یک فرصت عالی برای یادگیری عمیق مفاهیم RF، میکروکنترلرها، و برنامه‌نویسی است.</p>
+                <p>انگیزه من از نوشتن این کتاب، اشتراک‌گذاری دانشی است که در طول سال‌ها کسب کرده‌ام. من معتقدم که بهترین راه برای یادگیری، انجام پروژه‌های عملی است. این کتاب، شما را قدم‌به‌قدم از ایده تا پیاده‌سازی یک پروژه کامل همراهی می‌کند.</p>
+                <div class="info-box">
+                    <span class="box-title">هدف این کتاب</span>
+                    <p>هدف این کتاب، آموزش مفاهیم کلیدی الکترونیک و برنامه‌نویسی از طریق یک پروژه عملی و جذاب است. شما پس از خواندن این کتاب، قادر خواهید بود یک دستگاه قدرتمند بسازید، با مفاهیم RF آشنا شوید و مهارت‌های برنامه‌نویسی خود را تقویت کنید.</p>
+                </div>
+                <p>این کتاب به چهار فاز اصلی تقسیم شده است که هر کدام به تدریج شما را با مفاهیم جدید آشنا می‌کند. در فاز اول، با اصول اولیه سخت‌افزار و نرم‌افزار آشنا می‌شوید. در فاز دوم، قابلیت‌های تعاملی را اضافه می‌کنید. در فاز سوم، ماژول CC1101 را اضافه می‌کنید و در فاز چهارم، پروژه را به یک دستگاه شبکه‌ای قابل کنترل از راه دور تبدیل می‌کنید.</p>
+                <p>امیدوارم این کتاب، شروعی برای سفر شما در دنیای جذاب الکترونیک و ارتباطات بی‌سیم باشد.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 2 — معرفی پروژه N3XUS                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-1">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">معرفی</span><span class="page-number">صفحه ۲ از ۳۰</span></div>
+                    <h1>معرفی پروژه <span class="highlight">N3XUS</span></h1>
+                </div>
+                <p><strong>N3XUS</strong> یک پروژه منبع‌باز برای تست امنیت شبکه‌های بی‌سیم در باند ۲.۴ گیگاهرتز و زیر ۱ گیگاهرتز است. این پروژه بر پایه برد ESP32، سه ماژول رادیویی NRF24L01+ PA+LNA، یک ماژول CC1101 و یک نمایشگر TFT ساخته شده و قابلیت‌های متنوعی را در اختیار کاربر قرار می‌دهد.</p>
+                <p>ویژگی‌های کلیدی پروژه N3XUS عبارتند از:</p>
+                <ul>
+                    <li><strong>۱۲ حالت عملیاتی</strong>: Omniscient، Shadow، Spectrum Analyzer، Device Finder، Annihilator، Sniper، Blackout، Zombie، Mirage، Chameleon، Puppet و Omega.</li>
+                    <li><strong>استفاده همزمان از سه ماژول NRF24</strong> برای پوشش گسترده‌تر و قدرت بیشتر در باند ۲.۴ گیگاهرتز.</li>
+                    <li><strong>ماژول CC1101</strong> برای پوشش فرکانس‌های زیر ۱ گیگاهرتز (۴۳۳، ۸۶۸، ۹۱۵ مگاهرتز).</li>
+                    <li><strong>پنل وب</strong>: کنترل کامل دستگاه از طریق مرورگر.</li>
+                    <li><strong>نمایشگر TFT 1.69 اینچی</strong>: نمایش وضعیت، مود فعال و اطلاعات لحظه‌ای.</li>
+                    <li><strong>۵ LED رنگی</strong>: بازخورد بصری برای حالت‌های مختلف.</li>
+                    <li><strong>۳ دکمه فشاری</strong>: کنترل دستی بدون نیاز به کامپیوتر.</li>
+                    <li><strong>ذخیره‌سازی روی SD Card</strong>: لاگ‌گیری و ذخیره تنظیمات.</li>
+                </ul>
+                <div class="info-box success">
+                    <span class="box-title">مزیت کلیدی</span>
+                    <p>برخلاف پروژه‌های ساده، N3XUS با ترکیب سه ماژول NRF24 و یک CC1101، یک ابزار کامل برای تحلیل و تست امنیت در هر دو باند ۲.۴ گیگاهرتز و زیر ۱ گیگاهرتز است.</p>
+                </div>
+                <div class="info-box warning">
+                    <span class="box-title">تذکر قانونی و اخلاقی</span>
+                    <p>این پروژه صرفاً برای <strong>اهداف آموزشی</strong> و آشنایی با مفاهیم فنی طراحی شده است. هرگونه استفاده غیرمجاز، ایجاد مزاحمت یا تداخل در شبکه‌های مخابراتی، ممنوع و پیگرد قانونی دارد. مسئولیت هرگونه سوءاستفاده بر عهده خود کاربر است.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 3 — تاریخچه جنگ الکترونیک                                   -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-2">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">تحلیل</span><span class="page-number">صفحه ۳ از ۳۰</span></div>
+                    <h1>تاریخچه <span class="highlight">جنگ الکترونیک</span></h1>
+                </div>
+                <p>جنگ الکترونیک یا Electronic Warfare (EW)، به مجموعه اقداماتی گفته می‌شود که از طیف الکترومغناطیسی برای شناسایی، حمله و حفاظت در میدان نبرد استفاده می‌کنند. این مفهوم از زمان اختراع رادیو و رادار، به یکی از ارکان اصلی جنگ‌های مدرن تبدیل شده است.</p>
+                <p>تاریخچه جنگ الکترونیک را می‌توان به سه دوره اصلی تقسیم کرد:</p>
+                <ul>
+                    <li><strong>دوره اول (جنگ جهانی اول و دوم)</strong>: استفاده از رادیو برای ارتباطات و اولین تلاش‌ها برای اختلال در سیگنال‌های دشمن. در جنگ جهانی دوم، نیروهای متفقین از سیستم‌های پیشرفته‌ای مانند <strong>Window</strong> (پرتاب نوارهای آلومینیومی برای فریب رادار) استفاده کردند.</li>
+                    <li><strong>دوره دوم (جنگ سرد)</strong>: توسعه سیستم‌های راداری پیشرفته، موشک‌های هدایت‌شونده و جنگنده‌های رادارگریز. در این دوره، جنگ الکترونیک به یک حوزه تخصصی و استراتژیک تبدیل شد.</li>
+                    <li><strong>دوره سوم (امروز)</strong>: با ظهور فناوری‌های دیجیتال، SDR (رادیو نرم‌افزاری) و اینترنت اشیا، جنگ الکترونیک وارد فاز جدیدی شده است. امروزه، دستگاه‌های کوچک و کم‌هزینه مانند ESP32 و NRF24، امکان پیاده‌سازی مفاهیم جنگ الکترونیک را در مقیاس آزمایشگاهی و آموزشی فراهم کرده‌اند.</li>
+                </ul>
+                <p>پروژه N3XUS، یک گام کوچک در جهت درک مفاهیم جنگ الکترونیک مدرن است. با استفاده از این پروژه، شما می‌توانید با تکنیک‌های شناسایی سیگنال، اختلال و فریب آشنا شوید.</p>
+                <div class="info-box">
+                    <span class="box-title">قلاب فکری</span>
+                    <p>آیا می‌دانستید که اولین نمونه‌های عملی اختلال رادیویی (Jamming) در طول جنگ جهانی دوم، توسط نیروهای آلمانی برای مختل کردن ارتباطات متفقین استفاده می‌شد؟ امروزه، با یک برد ESP32 و چند ماژول ساده، می‌توانید همان مفاهیم را در خانه شبیه‌سازی کنید!</p>
+                </div>
+                <p>امروزه، جنگ الکترونیک به سه حوزه اصلی تقسیم می‌شود:</p>
+                <ul>
+                    <li><strong>حمله الکترونیکی (EA)</strong>: شامل اقداماتی مانند Jamming، Deception و Destruction.</li>
+                    <li><strong>پشتیبانی الکترونیکی (ES)</strong>: شامل شناسایی، رهگیری و تحلیل سیگنال‌های دشمن.</li>
+                    <li><strong>حفاظت الکترونیکی (EP)</strong>: شامل اقدامات دفاعی مانند پنهان‌سازی، رمزگذاری و مقاوم‌سازی.</li>
+                </ul>
+                <p>پروژه N3XUS عمدتاً بر حوزه‌های حمله الکترونیکی (EA) و پشتیبانی الکترونیکی (ES) متمرکز است.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 4 — شناخت قطعات                                           -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-3">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">قطعات</span><span class="page-number">صفحه ۴ از ۳۰</span></div>
+                    <h1>شناخت قطعات <span class="highlight">مشخصات فنی</span></h1>
+                </div>
+                <p>پیش از هر اقدامی، لازم است با هر قطعه و ویژگی‌های فنی آن آشنا شوید. در این بخش، قطعات کلیدی پروژه N3XUS را به طور کامل معرفی می‌کنیم.</p>
+
+                <h2>برد ESP32-WROOM-32 (۳۸ پین)</h2>
+                <ul>
+                    <li><strong>نقش:</strong> پردازنده مرکزی و هسته اصلی پروژه.</li>
+                    <li><strong>پردازنده:</strong> دو هسته Tensilica Xtensa LX6 با فرکانس ۲۴۰ مگاهرتز.</li>
+                    <li><strong>حافظه:</strong> فلش ۴ مگابایت، رم ۵۲۰ کیلوبایت.</li>
+                    <li><strong>ولتاژ کاری:</strong> ۳.۳ ولت.</li>
+                    <li><strong>چیپ USB-to-Serial:</strong> CP2102 یا CH340.</li>
+                    <li><strong>قابلیت‌های ارتباطی:</strong> وای‌فای ۲.۴ گیگاهرتز، بلوتوث ۴.۲.</li>
+                    <li><strong>مدل مناسب:</strong> ۳۸ پین (مدل‌های ۳۰ پین محدودیت دارند).</li>
+                </ul>
+
+                <h2>ماژول NRF24L01+ PA+LNA</h2>
+                <ul>
+                    <li><strong>نقش:</strong> فرستنده و گیرنده سیگنال‌های رادیویی در باند ۲.۴ گیگاهرتز.</li>
+                    <li><strong>کانال‌ها:</strong> ۱۲۶ کانال قابل تنظیم.</li>
+                    <li><strong>PA+LNA:</strong> تقویت‌کننده توان (برد بیشتر) و تقویت‌کننده کم‌نویز.</li>
+                    <li><strong>برد مؤثر:</strong> تا ۱۰۰ متر در فضای باز.</li>
+                    <li><strong>ولتاژ و جریان:</strong> ۳.۳ ولت و ۱۵۰ میلی‌آمپر.</li>
+                    <li><strong>پروتکل ارتباطی:</strong> SPI.</li>
+                    <li><strong>تعداد مورد نیاز:</strong> ۳ عدد (برای استفاده همزمان).</li>
+                </ul>
+
+                <h2>ماژول CC1101</h2>
+                <ul>
+                    <li><strong>نقش:</strong> فرستنده و گیرنده سیگنال‌های زیر ۱ گیگاهرتز.</li>
+                    <li><strong>فرکانس‌ها:</strong> ۳۰۰-۳۴۸، ۳۸۷-۴۶۴، ۷۷۹-۹۲۸ مگاهرتز.</li>
+                    <li><strong>قابلیت‌ها:</strong> پشتیبانی از مدولاسیون‌های مختلف (ASK، FSK، GFSK، MSK).</li>
+                    <li><strong>ولتاژ و جریان:</strong> ۳.۳ ولت و ۵۰ میلی‌آمپر.</li>
+                    <li><strong>پروتکل ارتباطی:</strong> SPI.</li>
+                </ul>
+
+                <h2>نمایشگر TFT 1.69 اینچی (ST7789)</h2>
+                <ul>
+                    <li><strong>نقش:</strong> نمایش وضعیت، اطلاعات و منوها.</li>
+                    <li><strong>رزولوشن:</strong> ۲۴۰x۲۸۰ پیکسل.</li>
+                    <li><strong>درایور:</strong> ST7789.</li>
+                    <li><strong>پروتکل:</strong> SPI (پین‌های SCK، MOSI، CS، DC، RST).</li>
+                </ul>
+
+                <div class="info-box warning">
+                    <span class="box-title">نکته حیاتی تغذیه</span>
+                    <p>مجموع جریان مصرفی سه ماژول NRF24 به حدود <strong>۴۵۰ میلی‌آمپر</strong> می‌رسد و با اضافه شدن CC1101 و TFT، کل جریان به حدود <strong>۶۰۰-۷۰۰ میلی‌آمپر</strong> می‌رسد. حتماً از یک منبع تغذیه جداگانه (رگولاتور AMS1117) برای تغذیه ماژول‌ها استفاده کنید. تغذیه از پین ۳.۳ ولت ESP32 باعث ناپایداری می‌شود.</p>
+                </div>
+
+                <p>همچنین، برای هر ماژول NRF24، یک خازن ۱۰-۱۰۰ میکروفاراد بین VCC و GND (نزدیک به خود ماژول) نصب کنید تا از نوسانات ولتاژ جلوگیری شود.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 5 — راهنمای خرید                                           -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-4">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">خرید</span><span class="page-number">صفحه ۵ از ۳۰</span></div>
+                    <h1>راهنمای خرید <span class="highlight">قطعات</span></h1>
+                </div>
+                <p>خرید قطعات، یکی از حساسترین مراحل است. با رعایت نکات زیر، از اشتباهات رایج و خرید قطعات تقلبی جلوگیری کنید.</p>
+
+                <h2>راهنمای خرید ESP32</h2>
+                <ul>
+                    <li>حتماً مدل <strong>۳۸ پین</strong> را انتخاب کنید. مدل‌های ۳۰ پین یا کمتر، برای این پروژه مناسب نیستند.</li>
+                    <li>روی برد عبارت <strong>ESP32-WROOM-32</strong> حک شده باشد.</li>
+                    <li>قیمت مناسب در بازار ایران: ۱۵۰ تا ۳۰۰ هزار تومان.</li>
+                    <li>کابل Micro-USB که با برد استفاده می‌کنید، حتماً <strong>قابلیت انتقال داده</strong> داشته باشد.</li>
+                    <li>به رنگ برد و کیفیت لحیم‌کاری پایه‌ها دقت کنید.</li>
+                </ul>
+
+                <h2>راهنمای خرید NRF24</h2>
+                <ul>
+                    <li>عبارت <strong>PA+LNA</strong> روی ماژول حک شده باشد و آنتن خارجی داشته باشد.</li>
+                    <li>حتماً <strong>۳ عدد</strong> تهیه کنید.</li>
+                    <li>به کیفیت آنتن و کانکتور آن دقت کنید.</li>
+                    <li>قیمت مناسب: ۸۰ تا ۱۵۰ هزار تومان (هر عدد).</li>
+                </ul>
+
+                <h2>راهنمای خرید CC1101</h2>
+                <ul>
+                    <li>ماژول دارای آنتن خارجی باشد.</li>
+                    <li>برند معتبر: <strong>ELECHOUSE</strong> یا <strong>SmartRF</strong>.</li>
+                    <li>قیمت مناسب: ۸۰ تا ۱۵۰ هزار تومان.</li>
+                </ul>
+
+                <h2>راهنمای خرید سایر قطعات</h2>
+                <ul>
+                    <li><strong>TFT 1.69 اینچی:</strong> با درایور ST7789 و پین‌های CS، DC، RST.</li>
+                    <li><strong>OLED 0.96 اینچی (اختیاری):</strong> برای نمایشگر دوم.</li>
+                    <li><strong>خازن‌ها:</strong> ۳ عدد خازن ۱۰-۱۰۰µF (برای هر ماژول NRF24 یک عدد).</li>
+                    <li><strong>دکمه‌ها:</strong> ۳ عدد تاکت سویچ ۴ پایه.</li>
+                    <li><strong>LEDها:</strong> ۵ عدد LED رنگی (سبز، قرمز، زرد، آبی، سفید) با مقاومت‌های ۲۲۰Ω.</li>
+                    <li><strong>رگولاتور:</strong> AMS1117 3.3V با هیت‌سینک.</li>
+                    <li><strong>ماژول SD Card Reader:</strong> با رابط SPI.</li>
+                </ul>
+
+                <div class="info-box warning">
+                    <span class="box-title">اشتباه رایج</span>
+                    <p><strong>حتماً مدل PA+LNA</strong> را تهیه کنید. مدل معمولی (بدون PA+LNA) برد بسیار کمی دارد و برای این پروژه قابل استفاده نیست.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 6 — آماده‌سازی محیط کار                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-5">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">آماده‌سازی</span><span class="page-number">صفحه ۶ از ۳۰</span></div>
+                    <h1>آماده‌سازی <span class="highlight">محیط کار</span></h1>
+                </div>
+                <p>قبل از شروع هر گونه کار عملی، باید محیط کار خود را آماده کنید. این شامل فضای فیزیکی، ابزارهای مورد نیاز و همچنین آماده‌سازی ذهنی برای یادگیری است.</p>
+
+                <h2>ابزارهای مورد نیاز</h2>
+                <ul>
+                    <li><strong>هویه (آهن لحیم‌کاری):</strong> برای لحیم‌کاری قطعات روی برد نهایی.</li>
+                    <li><strong>سیم‌های جامپر:</strong> برای اتصالات موقت روی بردبورد.</li>
+                    <li><strong>بردبورد (بورد بدون لحیم):</strong> برای تست و مونتاژ اولیه مدار.</li>
+                    <li><strong>مولتی‌متر:</strong> برای اندازه‌گیری ولتاژ و تست اتصالات.</li>
+                    <li><strong>کابل USB با قابلیت انتقال داده:</strong> برای اتصال ESP32 به کامپیوتر.</li>
+                    <li><strong>موچین و انبردست:</strong> برای جاگذاری قطعات کوچک.</li>
+                    <li><strong>ذوب قلع و سیم لحیم:</strong> برای لحیم‌کاری دائمی.</li>
+                    <li><strong>فلوکس (خمیر لحیم):</strong> برای بهبود کیفیت لحیم‌کاری.</li>
+                </ul>
+
+                <div class="info-box success">
+                    <span class="box-title">نکته ایمنی</span>
+                    <p>هنگام کار با هویه، حتماً از عینک ایمنی و تهویه مناسب استفاده کنید. محل کار خود را تمیز و مرتب نگه دارید تا از اتصال کوتاه و آسیب به قطعات جلوگیری شود.</p>
+                </div>
+
+                <p>همچنین، از یک زیرانداز مناسب برای لحیم‌کاری استفاده کنید تا از آسیب دیدن میز کار جلوگیری شود. در صورت امکان، یک پایه هویه نیز تهیه کنید.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 7 — نصب Arduino IDE                                        -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-6">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">نرم‌افزار</span><span class="page-number">صفحه ۷ از ۳۰</span></div>
+                    <h1>نصب و راه‌اندازی <span class="highlight">Arduino IDE</span></h1>
+                </div>
+                <p>Arduino IDE محیط اصلی برنامه‌نویسی و آپلود کد روی میکروکنترلرهاست. در این بخش، قدم‌به‌قدم نصب و راه‌اندازی آن را مرور می‌کنیم.</p>
+
+                <h2>مراحل نصب</h2>
+                <ol>
+                    <li>به وب‌سایت رسمی آردوینو (<a href="https://www.arduino.cc" target="_blank">www.arduino.cc</a>) مراجعه کنید.</li>
+                    <li>آخرین نسخه پایدار را برای سیستم‌عامل خود دانلود کنید.</li>
+                    <li>در حین نصب، گزینه <strong>Install USB drivers</strong> را فعال کنید.</li>
+                    <li>پس از اتمام نصب، کامپیوتر را ریستارت کنید.</li>
+                </ol>
+
+                <h2>نصب درایور USB-to-Serial</h2>
+                <p>بردهای ESP32 معمولاً از یکی از دو تراشه CP2102 یا CH340 برای ارتباط سریال استفاده می‌کنند. درایور مناسب را نصب کنید:</p>
+                <ul>
+                    <li><strong>CP2102:</strong> از وب‌سایت Silicon Labs.</li>
+                    <li><strong>CH340:</strong> از وب‌سایت WCH.</li>
+                </ul>
+
+                <div class="info-box success">
+                    <span class="box-title">تست شناسایی برد</span>
+                    <p>ESP32 را با کابل USB به کامپیوتر وصل کنید. در Device Manager، یک پورت COM جدید با نام "Silicon Labs CP210x" یا "USB Serial Port" ظاهر می‌شود. اگر پورت را نمی‌بینید، کابل USB را عوض کنید.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 8 — پیکربندی ESP32                                        -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-7">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">تنظیمات</span><span class="page-number">صفحه ۸ از ۳۰</span></div>
+                    <h1>پیکربندی ESP32 <span class="highlight">در Arduino IDE</span></h1>
+                </div>
+                <p>پس از نصب Arduino IDE، باید آن را برای کار با بردهای ESP32 پیکربندی کنید.</p>
+
+                <h2>۱. اضافه کردن آدرس مدیر برد</h2>
+                <p>آدرس زیر را در <strong>File → Preferences → Additional Boards Manager URLs</strong> وارد کنید:</p>
+                <div class="code-block">https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</div>
+
+                <h2>۲. نصب پکیج ESP32</h2>
+                <p>از منوی <strong>Tools → Board → Boards Manager</strong>، عبارت <strong>ESP32</strong> را جستجو کرده و پکیج "esp32 by Espressif Systems" را نصب کنید.</p>
+
+                <h2>۳. انتخاب برد و تنظیم پارامترها</h2>
+                <ul>
+                    <li>Board: <strong>ESP32 Dev Module</strong></li>
+                    <li>Flash Size: 4MB</li>
+                    <li>Upload Speed: 115200</li>
+                    <li>CPU Frequency: 240MHz</li>
+                    <li>Partition Scheme: Default</li>
+                </ul>
+
+                <div class="info-box success">
+                    <span class="box-title">تست با مثال Blink</span>
+                    <p>از منوی <strong>File → Examples → 01.Basics → Blink</strong> یک کد نمونه باز کنید و روی دکمه آپلود کلیک کنید. اگر LED داخلی روی برد ESP32 چشمک زد، یعنی همه چیز به درستی پیکربندی شده است.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 9 — نصب کتابخانه‌ها                                        -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-8">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">کتابخانه</span><span class="page-number">صفحه ۹ از ۳۰</span></div>
+                    <h1>نصب کتابخانه‌های <span class="highlight">ضروری</span></h1>
+                </div>
+                <p>برای پروژه N3XUS، کتابخانه‌های زیر باید نصب شوند:</p>
+
+                <h2>کتابخانه‌های اصلی</h2>
+                <ul>
+                    <li><strong>TFT_eSPI</strong> (برای TFT): توسط Bodmer – برای راه‌اندازی نمایشگر ST7789.</li>
+                    <li><strong>RF24</strong> (برای NRF24): توسط TMRh20 – برای ارتباط با ماژول‌های NRF24.</li>
+                    <li><strong>ELECHOUSE_CC1101</strong> (برای CC1101): توسط ELECHOUSE – برای راه‌اندازی ماژول CC1101.</li>
+                    <li><strong>SD</strong> (داخلی) – برای کار با کارت SD.</li>
+                    <li><strong>SPI</strong> (داخلی) – برای ارتباط SPI.</li>
+                    <li><strong>WiFi</strong> (داخلی) – برای اتصال به شبکه.</li>
+                    <li><strong>WebServer</strong> (داخلی) – برای راه‌اندازی وب‌سرور.</li>
+                </ul>
+
+                <h2>نصب از Library Manager</h2>
+                <p>از منوی <strong>Sketch → Include Library → Manage Libraries...</strong> بروید و کتابخانه‌های زیر را جستجو و نصب کنید:</p>
+                <ul>
+                    <li><strong>TFT_eSPI</strong> – توسط Bodmer</li>
+                    <li><strong>RF24</strong> – توسط TMRh20</li>
+                    <li><strong>ELECHOUSE_CC1101</strong> – توسط ELECHOUSE</li>
+                </ul>
+
+                <div class="info-box">
+                    <span class="box-title">تنظیمات TFT_eSPI</span>
+                    <p>پس از نصب TFT_eSPI، فایل <strong>User_Setup.h</strong> را در مسیر <code>libraries/TFT_eSPI</code> ویرایش کنید و تنظیمات زیر را فعال کنید:</p>
+                    <ul>
+                        <li><code>#define ST7789_DRIVER</code></li>
+                        <li><code>#define TFT_WIDTH 240</code></li>
+                        <li><code>#define TFT_HEIGHT 280</code></li>
+                        <li><code>#define TFT_CS 2</code></li>
+                        <li><code>#define TFT_DC 16</code></li>
+                        <li><code>#define TFT_RST 5</code></li>
+                        <li><code>#define TFT_SCLK 18</code></li>
+                        <li><code>#define TFT_MOSI 23</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 10 — نقشه اتصال NRF24                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-9">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">سیم‌بندی</span><span class="page-number">صفحه ۱۰ از ۳۰</span></div>
+                    <h1>نقشه اتصال <span class="highlight">NRF24</span></h1>
+                </div>
+                <p>اتصال صحیح قطعات، پایه و اساس هر پروژه الکترونیکی است. در این بخش، نقشه اتصال ESP32 به سه ماژول NRF24 را ارائه می‌دهیم.</p>
+
+                <h2>اتصالات مشترک (SPI Bus)</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>پایه ESP32</th><th>پایه NRF24</th><th>توضیح</th></tr>
+                        <tr><td>۳.۳ ولت (منبع جداگانه)</td><td>VCC</td><td>تغذیه مثبت (از رگولاتور جداگانه)</td></tr>
+                        <tr><td>GND</td><td>GND</td><td>زمین مشترک</td></tr>
+                        <tr><td>GPIO 18</td><td>SCK</td><td>خط کلاک SPI (مشترک)</td></tr>
+                        <tr><td>GPIO 19</td><td>MISO</td><td>Master In Slave Out (مشترک)</td></tr>
+                        <tr><td>GPIO 23</td><td>MOSI</td><td>Master Out Slave In (مشترک)</td></tr>
+                    </table>
+                </div>
+
+                <h2>پایه‌های اختصاصی (CE و CSN)</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>ماژول</th><th>CE (به ESP32)</th><th>CSN (به ESP32)</th><th>نقش</th></tr>
+                        <tr><td>NRF1 (Assassin)</td><td>GPIO 25</td><td>GPIO 26</td><td>حمله و ارسال داده</td></tr>
+                        <tr><td>NRF2 (Watcher)</td><td>GPIO 32</td><td>GPIO 33</td><td>شنود و دریافت داده</td></tr>
+                        <tr><td>NRF3 (Ghost)</td><td>GPIO 22</td><td>GPIO 21</td><td>اسکن و عملیات مخفی</td></tr>
+                    </table>
+                </div>
+
+                <div class="info-box warning">
+                    <span class="box-title">خازن — ضروری</span>
+                    <p><strong>یک خازن ۱۰ تا ۱۰۰ میکروفاراد</strong> بین VCC و GND هر ماژول NRF24 (نزدیک به خود ماژول) نصب کنید. پایه بلندتر (مثبت) به VCC و پایه کوتاه‌تر (منفی) به GND وصل می‌شود.</p>
+                </div>
+
+                <p>پس از اتمام اتصالات، یک بار دیگر همه چیز را با جدول بالا مقایسه کنید تا از صحت سیم‌بندی مطمئن شوید.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 11 — تست سلامت NRF24                                       -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-10">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">تست</span><span class="page-number">صفحه ۱۱ از ۳۰</span></div>
+                    <h1>تست سلامت <span class="highlight">NRF24</span></h1>
+                </div>
+                <p>پس از اتصال قطعات، نوبت به تست سلامت مدار می‌رسد. از مثال GettingStarted کتابخانه RF24 استفاده کنید.</p>
+
+                <h2>باز کردن مثال</h2>
+                <p>از منوی <strong>File → Examples → RF24 → GettingStarted</strong> را انتخاب کنید.</p>
+
+                <h2>تنظیم پین‌ها</h2>
+                <p>پین‌های CE و CSN را مطابق با اتصالات خود در کد تنظیم کنید. برای NRF1 (Assassin):</p>
+                <div class="code-block"><span class="comment">// تنظیم پین‌ها برای NRF1</span>
+<span class="keyword">#define</span> CE_PIN <span class="number">25</span>
+<span class="keyword">#define</span> CSN_PIN <span class="number">26</span></div>
+
+                <h2>تست هر سه ماژول</h2>
+                <p>برای تست هر سه ماژول، کد زیر را آپلود کنید:</p>
+                <div class="code-block"><span class="keyword">#include</span> <span class="string">&lt;SPI.h&gt;</span>
+<span class="keyword">#include</span> <span class="string">&lt;RF24.h&gt;</span>
+
+<span class="keyword">#define</span> CE1 <span class="number">25</span>
+<span class="keyword">#define</span> CSN1 <span class="number">26</span>
+<span class="keyword">#define</span> CE2 <span class="number">32</span>
+<span class="keyword">#define</span> CSN2 <span class="number">33</span>
+<span class="keyword">#define</span> CE3 <span class="number">22</span>
+<span class="keyword">#define</span> CSN3 <span class="number">21</span>
+
+RF24 radio1(CE1, CSN1);
+RF24 radio2(CE2, CSN2);
+RF24 radio3(CE3, CSN3);
+
+<span class="func">void</span> <span class="func">setup</span>() {
+  <span class="func">Serial.begin</span>(<span class="number">115200</span>);
+  <span class="func">Serial.println</span>(<span class="string">"Testing NRF24 modules..."</span>);
+  
+  <span class="keyword">if</span> (radio1.begin()) <span class="func">Serial.println</span>(<span class="string">"NRF1 (Assassin) OK"</span>);
+  <span class="keyword">else</span> <span class="func">Serial.println</span>(<span class="string">"NRF1 FAILED"</span>);
+  
+  <span class="keyword">if</span> (radio2.begin()) <span class="func">Serial.println</span>(<span class="string">"NRF2 (Watcher) OK"</span>);
+  <span class="keyword">else</span> <span class="func">Serial.println</span>(<span class="string">"NRF2 FAILED"</span>);
+  
+  <span class="keyword">if</span> (radio3.begin()) <span class="func">Serial.println</span>(<span class="string">"NRF3 (Ghost) OK"</span>);
+  <span class="keyword">else</span> <span class="func">Serial.println</span>(<span class="string">"NRF3 FAILED"</span>);
+}
+
+<span class="func">void</span> <span class="func">loop</span>() {}</div>
+
+                <p>اگر پیام <strong>"OK"</strong> را برای هر سه ماژول مشاهده کردید، همه چیز به درستی کار می‌کند.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 12 — عیب‌یابی فاز اول                                       -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-11">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">عیب‌یابی</span><span class="page-number">صفحه ۱۲ از ۳۰</span></div>
+                    <h1>عیب‌یابی <span class="highlight">فاز اول</span></h1>
+                </div>
+                <p>رایج‌ترین مشکلات فاز اول و راه‌حل‌های آنها:</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>مشکل</th><th>راه‌حل</th></tr>
+                        <tr><td>NRF24 شناسایی نمی‌شود</td>
+                            <td>خازن ۱۰-۱۰۰µF بین VCC و GND نصب شده است؟ تغذیه ۳.۳ ولت را با مولتی‌متر اندازه بگیرید. پایه‌های CE و CSN را با جدول اتصالات مقایسه کنید.</td></tr>
+                        <tr><td>در Serial Monitor خطای کامپایل می‌آید</td>
+                            <td>کتابخانه RF24 را نصب کرده‌اید؟ برد ESP32 Dev Module را انتخاب کنید.</td></tr>
+                        <tr><td>خروجی Serial Monitor خالی است</td>
+                            <td>نرخ باد را روی ۱۱۵۲۰۰ تنظیم کنید. دکمه EN را روی ESP32 فشار دهید تا برد ریست شود.</td></tr>
+                        <tr><td>برد به طور مداوم ریست می‌شود</td>
+                            <td>تغذیه را تقویت کنید (از آداپتور ۲ آمپر استفاده کنید). یک خازن بزرگ‌تر (۱۰۰۰µF) به ورودی برق اضافه کنید.</td></tr>
+                    </table>
+                </div>
+
+                <div class="info-box warning">
+                    <span class="box-title">نکته مهم</span>
+                    <p>اگر با وجود بررسی همه موارد، مشکل همچنان پابرجا بود، احتمالاً ماژول NRF24 شما معیوب است. سعی کنید یک ماژول دیگر را تست کنید.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 13 — افزودن TFT                                            -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-12">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز دوم</span><span class="page-number">صفحه ۱۳ از ۳۰</span></div>
+                    <h1>افزودن TFT <span class="highlight">نمایشگر اصلی</span></h1>
+                </div>
+                <p>TFT به عنوان نمایشگر اصلی پروژه عمل می‌کند و اطلاعاتی مانند وضعیت، کانال فعال، منوها و پیام‌های سیستمی را به کاربر نشان می‌دهد.</p>
+
+                <h2>نقشه اتصال TFT (ST7789)</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>پایه TFT</th><th>پایه ESP32</th><th>توضیح</th></tr>
+                        <tr><td>VCC</td><td>۳.۳ ولت</td><td>تغذیه مثبت</td></tr>
+                        <tr><td>GND</td><td>GND</td><td>زمین</td></tr>
+                        <tr><td>BLK</td><td>۳.۳ ولت</td><td>روشنایی (Backlight)</td></tr>
+                        <tr><td>SCL</td><td>GPIO 18</td><td>SCK (از SPI مشترک)</td></tr>
+                        <tr><td>SDA</td><td>GPIO 23</td><td>MOSI (از SPI مشترک)</td></tr>
+                        <tr><td>CS</td><td>GPIO 2</td><td>Chip Select</td></tr>
+                        <tr><td>DC</td><td>GPIO 4</td><td>Data/Command</td></tr>
+                        <tr><td>RES</td><td>GPIO 5</td><td>Reset</td></tr>
+                    </table>
+                </div>
+
+                <h2>کد تست TFT</h2>
+                <div class="code-block"><span class="keyword">#include</span> <span class="string">&lt;TFT_eSPI.h&gt;</span>
+TFT_eSPI tft = TFT_eSPI();
+
+<span class="func">void</span> <span class="func">setup</span>() {
+  tft.init();
+  tft.setRotation(<span class="number">4</span>);
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextSize(<span class="number">3</span>);
+  tft.setCursor(<span class="number">30</span>, <span class="number">60</span>);
+  tft.println(<span class="string">"N3XUS"</span>);
+}
+
+<span class="func">void</span> <span class="func">loop</span>() {}</div>
+
+                <div class="info-box success">
+                    <span class="box-title">نکته</span>
+                    <p>اگر TFT کار نکرد، تنظیمات فایل <strong>User_Setup.h</strong> کتابخانه TFT_eSPI را بررسی کنید. مطمئن شوید که <code>ST7789_DRIVER</code> فعال است.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 14 — افزودن دکمه‌ها                                        -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-13">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز دوم</span><span class="page-number">صفحه ۱۴ از ۳۰</span></div>
+                    <h1>افزودن دکمه‌ها <span class="highlight">کنترل دستی</span></h1>
+                </div>
+                <p>دکمه‌ها به کاربر امکان می‌دهند تا بدون نیاز به کامپیوتر یا پنل وب، دستگاه را کنترل کند. سه دکمه برای منو، انتخاب و بازگشت تعبیه شده است.</p>
+
+                <h2>نقشه اتصال دکمه‌ها</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>دکمه</th><th>پایه ESP32</th><th>وظیفه</th></tr>
+                        <tr><td>SW1 (Menu)</td><td>GPIO 33</td><td>ورود به منو / بازگشت</td></tr>
+                        <tr><td>SW2 (Up/Select)</td><td>GPIO 32</td><td>حرکت به بالا / انتخاب</td></tr>
+                        <tr><td>SW3 (Down/Back)</td><td>GPIO 4</td><td>حرکت به پایین / بازگشت</td></tr>
+                    </table>
+                </div>
+
+                <h2>کد تست دکمه‌ها</h2>
+                <div class="code-block"><span class="keyword">#define</span> SW1 <span class="number">33</span>
+<span class="keyword">#define</span> SW2 <span class="number">32</span>
+<span class="keyword">#define</span> SW3 <span class="number">4</span>
+
+<span class="func">void</span> <span class="func">setup</span>() {
+  <span class="func">Serial.begin</span>(<span class="number">115200</span>);
+  <span class="func">pinMode</span>(SW1, INPUT_PULLUP);
+  <span class="func">pinMode</span>(SW2, INPUT_PULLUP);
+  <span class="func">pinMode</span>(SW3, INPUT_PULLUP);
+}
+
+<span class="func">void</span> <span class="func">loop</span>() {
+  <span class="keyword">if</span> (<span class="func">digitalRead</span>(SW1) == LOW) <span class="func">Serial.println</span>(<span class="string">"SW1 pressed"</span>);
+  <span class="keyword">if</span> (<span class="func">digitalRead</span>(SW2) == LOW) <span class="func">Serial.println</span>(<span class="string">"SW2 pressed"</span>);
+  <span class="keyword">if</span> (<span class="func">digitalRead</span>(SW3) == LOW) <span class="func">Serial.println</span>(<span class="string">"SW3 pressed"</span>);
+  <span class="func">delay</span>(<span class="number">200</span>);
+}</div>
+
+                <p>پس از آپلود، با فشار دادن هر دکمه، پیام مربوطه در Serial Monitor نمایش داده می‌شود.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 15 — افزودن LEDها                                          -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-14">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز دوم</span><span class="page-number">صفحه ۱۵ از ۳۰</span></div>
+                    <h1>افزودن LEDها <span class="highlight">وضعیت‌دهی بصری</span></h1>
+                </div>
+                <p>پنج LED رنگی برای نمایش وضعیت سیستم، هشدارها و حالت‌های مختلف تعبیه شده است.</p>
+
+                <h2>نقشه اتصال LEDها</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>LED</th><th>رنگ</th><th>پایه ESP32</th><th>وظیفه</th></tr>
+                        <tr><td>LED1</td><td>سبز 🟢</td><td>GPIO 12</td><td>سیستم فعال و سالم</td></tr>
+                        <tr><td>LED2</td><td>قرمز 🔴</td><td>GPIO 13</td><td>هشدار / حمله فعال</td></tr>
+                        <tr><td>LED3</td><td>زرد 🟡</td><td>GPIO 27</td><td>اسکن در حال انجام</td></tr>
+                        <tr><td>LED4</td><td>آبی 🔵</td><td>GPIO 34</td><td>ارتباط با SD Card</td></tr>
+                        <tr><td>LED5</td><td>سفید ⚪</td><td>GPIO 15</td><td>حالت آماده‌باش</td></tr>
+                    </table>
+                </div>
+
+                <p>پایه کاتد (منفی) هر LED را با یک مقاومت ۲۲۰Ω به GND وصل کنید. پایه آند (مثبت) را به پین ESP32 متصل کنید.</p>
+
+                <h2>کد تست LEDها</h2>
+                <div class="code-block"><span class="keyword">int</span> leds[] = {<span class="number">12</span>, <span class="number">13</span>, <span class="number">27</span>, <span class="number">34</span>, <span class="number">15</span>};
+<span class="keyword">int</span> ledCount = <span class="number">5</span>;
+
+<span class="func">void</span> <span class="func">setup</span>() {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < ledCount; i++) {
+    <span class="func">pinMode</span>(leds[i], OUTPUT);
+  }
+}
+
+<span class="func">void</span> <span class="func">loop</span>() {
+  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < ledCount; i++) {
+    <span class="func">digitalWrite</span>(leds[i], HIGH);
+    <span class="func">delay</span>(<span class="number">200</span>);
+    <span class="func">digitalWrite</span>(leds[i], LOW);
+    <span class="func">delay</span>(<span class="number">100</span>);
+  }
+}</div>
+
+                <p>پس از آپلود، LEDها به صورت متوالی روشن و خاموش می‌شوند.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 16 — کد اصلی N3XUS                                         -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-15">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز دوم</span><span class="page-number">صفحه ۱۶ از ۳۰</span></div>
+                    <h1>کد اصلی <span class="highlight">N3XUS</span></h1>
+                </div>
+                <p>کد اصلی N3XUS تمام قطعات را یکپارچه می‌کند: سه ماژول NRF24، TFT، LEDها و دکمه‌ها.</p>
+
+                <h2>ساختار کد اصلی</h2>
+                <ul>
+                    <li><strong>تنظیمات اولیه</strong>: تعریف پین‌ها، اشیاء و متغیرها.</li>
+                    <li><strong>توابع نمایش</strong>: نمایش منوها و اطلاعات روی TFT.</li>
+                    <li><strong>توابع NRF</strong>: اسکن، حمله و ارسال داده.</li>
+                    <li><strong>مدیریت LEDها</strong>: وضعیت‌دهی بر اساس حالت سیستم.</li>
+                    <li><strong>مدیریت دکمه‌ها</strong>: پردازش ورودی‌های کاربر.</li>
+                    <li><strong>حلقه اصلی (loop)</strong>: اجرای عملیات‌ها و به‌روزرسانی نمایشگر.</li>
+                </ul>
+
+                <div class="info-box">
+                    <span class="box-title">کد کامل N3XUS</span>
+                    <p>کد کامل پروژه N3XUS شامل بیش از ۴۰۰ خط است و در مخزن گیت‌هاب پروژه موجود است. برای مشاهده و دانلود کد کامل، به آدرس زیر مراجعه کنید:</p>
+                    <p><a href="https://github.com/here-is-leo/N3XUS" target="_blank">github.com/here-is-leo/N3XUS</a></p>
+                </div>
+
+                <p>کد اصلی N3XUS از ۱۲ حالت عملیاتی پشتیبانی می‌کند و قابلیت‌های زیر را دارد:</p>
+                <ul>
+                    <li><strong>اسکن کامل</strong>: اسکن ۱۲۵ کانال در باند ۲.۴ گیگاهرتز.</li>
+                    <li><strong>حمله هدفمند</strong>: ارسال پکت به یک کانال خاص.</li>
+                    <li><strong>حمله گسترده</strong>: حمله همزمان به همه کانال‌ها.</li>
+                    <li><strong>پارازیت</strong>: اختلال کامل در فرکانس‌ها.</li>
+                    <li><strong>تزریق پکت</strong>: ارسال پکت‌های جعلی به شبکه.</li>
+                </ul>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 17 — آشنایی با CC1101                                       -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-16">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز سوم</span><span class="page-number">صفحه ۱۷ از ۳۰</span></div>
+                    <h1>آشنایی با ماژول <span class="highlight">CC1101</span></h1>
+                </div>
+                <p>ماژول CC1101 یک تراشه فرستنده/گیرنده RF کم‌مصرف است که برای کار در فرکانس‌های زیر ۱ گیگاهرتز طراحی شده است. این ماژول به پروژه N3XUS امکان می‌دهد تا علاوه بر باند ۲.۴ گیگاهرتز، در باندهای ۴۳۳، ۸۶۸ و ۹۱۵ مگاهرتز نیز فعالیت کند.</p>
+
+                <h2>مشخصات فنی CC1101</h2>
+                <ul>
+                    <li><strong>محدوده فرکانسی</strong>: ۳۰۰-۳۴۸، ۳۸۷-۴۶۴، ۷۷۹-۹۲۸ مگاهرتز.</li>
+                    <li><strong>مدولاسیون</strong>: 2-FSK، GFSK، MSK، OOK.</li>
+                    <li><strong>نرخ داده</strong>: ۰.۶ تا ۵۰۰ کیلوبیت بر ثانیه.</li>
+                    <li><strong>توان خروجی</strong>: تا ۱۰ دسی‌بل (با PA+LNA).</li>
+                    <li><strong>حساسیت</strong>: -۱۱۴ دسی‌بل (در نرخ داده ۱.۲ کیلوبیت بر ثانیه).</li>
+                    <li><strong>جریان مصرفی</strong>: ۵۰ میلی‌آمپر در حالت ارسال.</li>
+                </ul>
+
+                <div class="info-box success">
+                    <span class="box-title">کاربردهای CC1101</span>
+                    <p>این ماژول در پروژه‌های مختلفی مانند ریموت کنترل، سیستم‌های امنیتی، پهپادها، و دستگاه‌های IoT استفاده می‌شود. در پروژه N3XUS، برای اسکن و اختلال در فرکانس‌های زیر ۱ گیگاهرتز کاربرد دارد.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 18 — اتصال CC1101                                          -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-17">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز سوم</span><span class="page-number">صفحه ۱۸ از ۳۰</span></div>
+                    <h1>اتصال <span class="highlight">CC1101</span></h1>
+                </div>
+                <p>اتصال CC1101 به ESP32 از طریق پروتکل SPI انجام می‌شود.</p>
+
+                <h2>نقشه اتصال CC1101</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>پایه CC1101</th><th>پایه ESP32</th><th>توضیح</th></tr>
+                        <tr><td>VCC</td><td>۳.۳ ولت</td><td>تغذیه مثبت</td></tr>
+                        <tr><td>GND</td><td>GND</td><td>زمین</td></tr>
+                        <tr><td>SCK</td><td>GPIO 18</td><td>SCK (از SPI مشترک)</td></tr>
+                        <tr><td>MOSI</td><td>GPIO 23</td><td>MOSI (از SPI مشترک)</td></tr>
+                        <tr><td>MISO</td><td>GPIO 19</td><td>MISO (از SPI مشترک)</td></tr>
+                        <tr><td>CS</td><td>GPIO 16</td><td>Chip Select</td></tr>
+                        <tr><td>GDO0</td><td>GPIO 17</td><td>وقفه/داده (اختیاری)</td></tr>
+                    </table>
+                </div>
+
+                <div class="info-box warning">
+                    <span class="box-title">نکته مهم</span>
+                    <p>پایه CS (Chip Select) CC1101 باید به GPIO 16 متصل شود. این پایه با پایه DC TFT (GPIO 4) متفاوت است. دقت کنید که اتصالات اشتباه نشوند.</p>
+                </div>
+
+                <p>پس از اتمام اتصالات، می‌توانید با استفاده از کتابخانه ELECHOUSE_CC1101، ماژول را تست کنید.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 19 — تست CC1101                                            -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-18">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز سوم</span><span class="page-number">صفحه ۱۹ از ۳۰</span></div>
+                    <h1>تست و راه‌اندازی <span class="highlight">CC1101</span></h1>
+                </div>
+                <p>پس از اتصال قطعات، نوبت به تست سلامت CC1101 می‌رسد.</p>
+
+                <h2>کد تست CC1101</h2>
+                <div class="code-block"><span class="keyword">#include</span> <span class="string">&lt;ELECHOUSE_CC1101.h&gt;</span>
+
+<span class="keyword">#define</span> CC_CS <span class="number">16</span>
+
+<span class="func">void</span> <span class="func">setup</span>() {
+  <span class="func">Serial.begin</span>(<span class="number">115200</span>);
+  <span class="func">Serial.println</span>(<span class="string">"Testing CC1101..."</span>);
+  
+  ELECHOUSE_cc1101.setSpiPin(<span class="number">18</span>, <span class="number">19</span>, <span class="number">23</span>, CC_CS);
+  
+  <span class="keyword">if</span> (ELECHOUSE_cc1101.Init()) {
+    <span class="func">Serial.println</span>(<span class="string">"CC1101 OK"</span>);
+  } <span class="keyword">else</span> {
+    <span class="func">Serial.println</span>(<span class="string">"CC1101 FAILED"</span>);
+  }
+}
+
+<span class="func">void</span> <span class="func">loop</span>() {}</div>
+
+                <p>اگر پیام <strong>"CC1101 OK"</strong> را مشاهده کردید، ماژول به درستی کار می‌کند. در غیر این صورت، اتصالات را بررسی کنید.</p>
+
+                <div class="info-box success">
+                    <span class="box-title">تنظیم فرکانس</span>
+                    <p>برای تنظیم فرکانس CC1101، از تابع <code>ELECHOUSE_cc1101.setMHZ(433.92)</code> استفاده کنید. فرکانس‌های پشتیبانی‌شده: ۴۳۳.۹۲، ۸۶۸.۰ و ۹۱۵.۰ مگاهرتز.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 20 — پنل وب N3XUS                                          -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-19">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز چهارم</span><span class="page-number">صفحه ۲۰ از ۳۰</span></div>
+                    <h1>پنل وب <span class="highlight">N3XUS</span></h1>
+                </div>
+                <p>پنل وب N3XUS امکان کنترل کامل دستگاه را از طریق مرورگر فراهم می‌کند. این پنل با استفاده از کتابخانه WebServer ساخته شده است.</p>
+
+                <h2>ویژگی‌های پنل وب</h2>
+                <ul>
+                    <li><strong>نمایش وضعیت</strong>: نشان دادن ONLINE/OFFLINE با رنگ‌های سبز و قرمز.</li>
+                    <li><strong>نمایش حالت فعلی</strong>: نمایش نام حالت انتخاب‌شده.</li>
+                    <li><strong>دکمه‌های کنترل</strong>: فعال/غیرفعال، اجرای حالت، حمله مستقیم.</li>
+                    <li><strong>منوی انتخاب حالت</strong>: انتخاب یکی از ۱۲ حالت عملیاتی.</li>
+                    <li><strong>آمار</strong>: نمایش تعداد پکت‌ها، شبکه‌ها و آپ‌تایم.</li>
+                    <li><strong>نتیجه عملیات</strong>: نمایش آخرین نتیجه اجرا شده.</li>
+                    <li><strong>به‌روزرسانی خودکار</strong>: وضعیت هر ۲ ثانیه به‌روز می‌شود.</li>
+                </ul>
+
+                <h2>دسترسی به پنل وب</h2>
+                <ol>
+                    <li>پس از آپلود کد نهایی، دستگاه یک شبکه وای‌فای با نام <strong>N3XUS</strong> و رمز <strong>12345678</strong> ایجاد می‌کند.</li>
+                    <li>با گوشی یا لپ‌تاپ به این شبکه متصل شوید.</li>
+                    <li>مرورگر را باز کرده و آدرس <strong>http://192.168.4.1</strong> را وارد کنید.</li>
+                    <li>پنل وب N3XUS باز می‌شود.</li>
+                </ol>
+
+                <div class="info-box success">
+                    <span class="box-title">طراحی واکنش‌گرا</span>
+                    <p>پنل وب برای نمایش روی موبایل، تبلت و دسکتاپ بهینه‌سازی شده است.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 21 — ذخیره‌سازی روی SD                                     -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-20">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز چهارم</span><span class="page-number">صفحه ۲۱ از ۳۰</span></div>
+                    <h1>ذخیره‌سازی روی <span class="highlight">SD Card</span></h1>
+                </div>
+                <p>ماژول SD Card Reader امکان ذخیره‌سازی لاگ‌ها و تنظیمات پروژه را فراهم می‌کند.</p>
+
+                <h2>نقشه اتصال SD Card</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>پایه SD Card</th><th>پایه ESP32</th><th>توضیح</th></tr>
+                        <tr><td>VCC</td><td>۳.۳ ولت</td><td>تغذیه مثبت</td></tr>
+                        <tr><td>GND</td><td>GND</td><td>زمین</td></tr>
+                        <tr><td>SCK</td><td>GPIO 18</td><td>SCK (از SPI مشترک)</td></tr>
+                        <tr><td>MOSI</td><td>GPIO 23</td><td>MOSI (از SPI مشترک)</td></tr>
+                        <tr><td>MISO</td><td>GPIO 19</td><td>MISO (از SPI مشترک)</td></tr>
+                        <tr><td>CS</td><td>GPIO 14</td><td>Chip Select</td></tr>
+                    </table>
+                </div>
+
+                <h2>کد تست SD Card</h2>
+                <div class="code-block"><span class="keyword">#include</span> <span class="string">&lt;SD.h&gt;</span>
+
+<span class="keyword">#define</span> SD_CS <span class="number">14</span>
+
+<span class="func">void</span> <span class="func">setup</span>() {
+  <span class="func">Serial.begin</span>(<span class="number">115200</span>);
+  
+  <span class="keyword">if</span> (SD.begin(SD_CS)) {
+    <span class="func">Serial.println</span>(<span class="string">"SD Card OK"</span>);
+  } <span class="keyword">else</span> {
+    <span class="func">Serial.println</span>(<span class="string">"SD Card FAILED"</span>);
+  }
+}</div>
+
+                <div class="info-box warning">
+                    <span class="box-title">فرمت SD Card</span>
+                    <p>کارت SD باید با فرمت <strong>FAT32</strong> فرمت شده باشد. ظرفیت حداکثر ۳۲ گیگابایت.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 22 — اتصال به وای‌فای                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-21">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">فاز چهارم</span><span class="page-number">صفحه ۲۲ از ۳۰</span></div>
+                    <h1>اتصال به وای‌فای <span class="highlight">و کنترل از راه دور</span></h1>
+                </div>
+                <p>پس از آپلود کد نهایی، دستگاه به عنوان یک اکسس پوینت (AP) عمل می‌کند و یک شبکه وای‌فای ایجاد می‌کند.</p>
+
+                <h2>تنظیمات شبکه</h2>
+                <ul>
+                    <li><strong>SSID</strong>: N3XUS</li>
+                    <li><strong>رمز عبور</strong>: 12345678</li>
+                    <li><strong>آدرس IP</strong>: 192.168.4.1</li>
+                </ul>
+
+                <h2>مراحل اتصال</h2>
+                <ol>
+                    <li>دستگاه را روشن کنید.</li>
+                    <li>با گوشی یا لپ‌تاپ، به شبکه <strong>N3XUS</strong> با رمز <strong>12345678</strong> متصل شوید.</li>
+                    <li>مرورگر را باز کرده و آدرس <strong>http://192.168.4.1</strong> را وارد کنید.</li>
+                    <li>صفحه کنترل N3XUS باز می‌شود.</li>
+                </ol>
+
+                <div class="info-box warning">
+                    <span class="box-title">نکته مهم</span>
+                    <p>این شبکه محلی است و به اینترنت متصل نیست. فقط دستگاه‌هایی که به این شبکه متصل هستند، می‌توانند دستگاه را کنترل کنند.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 23 — ۱۲ حالت عملیاتی                                       -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-22">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">تکمیلی</span><span class="page-number">صفحه ۲۳ از ۳۰</span></div>
+                    <h1>۱۲ حالت عملیاتی <span class="highlight">N3XUS</span></h1>
+                </div>
+                <p>N3XUS شامل ۱۲ حالت عملیاتی در ۴ دسته کلی است:</p>
+
+                <h2>📡 دسته اول: اسکن و شناسایی (Reconnaissance)</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>#</th><th>نام حالت</th><th>توضیح</th></tr>
+                        <tr><td>۱</td><td>Omniscient</td><td>اسکن کامل همه کانال‌های ۲.۴GHz و زیر ۱GHz</td></tr>
+                        <tr><td>۲</td><td>Shadow</td><td>اسکن مخفی (بدون ارسال هیچ سیگنالی)</td></tr>
+                        <tr><td>۳</td><td>Spectrum Analyzer</td><td>نمایش گرافیکی قدرت سیگنال در فرکانس‌ها</td></tr>
+                        <tr><td>۴</td><td>Device Finder</td><td>جستجوی دستگاه‌های خاص (دوربین، پهپاد)</td></tr>
+                    </table>
+                </div>
+
+                <h2>⚔️ دسته دوم: حمله (Attack)</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>#</th><th>نام حالت</th><th>توضیح</th></tr>
+                        <tr><td>۵</td><td>Annihilator</td><td>حمله به همه شبکه‌های اطراف</td></tr>
+                        <tr><td>۶</td><td>Sniper</td><td>حمله به یک دستگاه خاص (Targeted Attack)</td></tr>
+                        <tr><td>۷</td><td>Blackout</td><td>پارازیت گسترده روی همه کانال‌ها</td></tr>
+                        <tr><td>۸</td><td>Zombie</td><td>تزریق پکت‌های جعلی به شبکه</td></tr>
+                    </table>
+                </div>
+
+                <h2>🎭 دسته سوم: فریب (Deception)</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>#</th><th>نام حالت</th><th>توضیح</th></tr>
+                        <tr><td>۹</td><td>Mirage</td><td>ایجاد شبکه‌های جعلی (Rogue AP)</td></tr>
+                        <tr><td>۱۰</td><td>Chameleon</td><td>تغییر هویت (Spoofing)</td></tr>
+                        <tr><td>۱۱</td><td>Puppet</td><td>کنترل دستگاه‌های قربانی</td></tr>
+                    </table>
+                </div>
+
+                <h2>🛡️ دسته چهارم: ترکیبی</h2>
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>#</th><th>نام حالت</th><th>توضیح</th></tr>
+                        <tr><td>۱۲</td><td>Omega</td><td>ترکیب همه حالت‌ها به صورت هوشمند</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 24 — عیب‌یابی پیشرفته                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-23">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">تکمیلی</span><span class="page-number">صفحه ۲۴ از ۳۰</span></div>
+                    <h1>عیب‌یابی پیشرفته <span class="highlight">رفع مشکلات</span></h1>
+                </div>
+                <p>مشکلات پیشرفته‌تر و راه‌حل‌های آنها:</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>مشکل</th><th>راه‌حل</th></tr>
+                        <tr><td>TFT سفید است</td>
+                            <td>درایور ST7789 را در User_Setup.h فعال کنید. پین‌های CS، DC و RST را بررسی کنید.</td></tr>
+                        <tr><td>NRF پیدا نمی‌شود</td>
+                            <td>خازن ۱۰µF نزدیک VCC نصب کنید. تغذیه ۳.۳ ولت را با مولتی‌متر اندازه بگیرید.</td></tr>
+                        <tr><td>CC1101 کار نمی‌کند</td>
+                            <td>پایه CS را به GPIO 16 وصل کنید. کتابخانه ELECHOUSE_CC1101 را نصب کنید.</td></tr>
+                        <tr><td>SD Card خوانده نمی‌شود</td>
+                            <td>کارت SD را با فرمت FAT32 فرمت کنید. ظرفیت کارت حداکثر ۳۲GB باشد.</td></tr>
+                        <tr><td>پنل وب باز نمی‌شود</td>
+                            <td>به شبکه N3XUS متصل شوید و آدرس 192.168.4.1 را وارد کنید. فایروال را موقتاً غیرفعال کنید.</td></tr>
+                        <tr><td>دکمه‌ها کار نمی‌کنند</td>
+                            <td>از INPUT_PULLUP استفاده کنید. اتصالات GPIO به GND را بررسی کنید.</td></tr>
+                        <tr><td>برد به طور مداوم ریست می‌شود</td>
+                            <td>تغذیه را تقویت کنید (آداپتور ۲ آمپر). خازن ۱۰۰۰µF به ورودی برق اضافه کنید.</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 25 — مقایسه با ابزارها                                     -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-24">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">تحلیل</span><span class="page-number">صفحه ۲۵ از ۳۰</span></div>
+                    <h1>مقایسه با ابزارهای مشابه <span class="highlight">Flipper Zero، HackRF و RTL-SDR</span></h1>
+                </div>
+                <p>در بازار امروز، ابزارهای متنوعی برای تست و تحلیل سیگنال‌های رادیویی وجود دارد. در این بخش، پروژه N3XUS را با سه ابزار محبوب مقایسه می‌کنیم.</p>
+
+                <div class="table-wrap">
+                    <table>
+                        <tr><th>ویژگی</th><th>N3XUS</th><th>Flipper Zero</th><th>HackRF</th><th>RTL-SDR</th></tr>
+                        <tr><td>قیمت</td><td>~۵۰$</td><td>~۲۰۰$</td><td>~۴۰۰$</td><td>~۳۰$</td></tr>
+                        <tr><td>باند فرکانسی</td><td>۲.۴GHz + Sub-1GHz</td><td>Sub-1GHz + RFID</td><td>۱MHz-6GHz</td><td>۲۴MHz-1.7GHz</td></tr>
+                        <tr><td>قابلیت ارسال</td><td>✅</td><td>✅ (محدود)</td><td>✅</td><td>❌</td></tr>
+                        <tr><td>پنل وب</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+                        <tr><td>قابلیت شخصی‌سازی</td><td>✅ کامل</td><td>🟡 محدود</td><td>✅ کامل</td><td>✅ کامل</td></tr>
+                        <tr><td>مناسب برای مبتدیان</td><td>✅</td><td>✅</td><td>🟡 متوسط</td><td>✅</td></tr>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <span class="box-title">جایگاه پروژه N3XUS</span>
+                    <p>N3XUS با هزینه‌ای حدود ۵۰ دلار، یک ابزار تخصصی برای باندهای ۲.۴ گیگاهرتز و زیر ۱ گیگاهرتز است که هم قدرت ارسال بالایی دارد، هم کنترل از راه‌دور، هم کاملاً آموزشی است و هم کد آن قابل شخصی‌سازی است. این ترکیب، آن را به گزینه‌ای ایده‌آل برای یادگیری عمیق و پروژه‌های شخصی تبدیل می‌کند.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 26 — پرسش‌های متداول (FAQ)                                  -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-25">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">پرسش</span><span class="page-number">صفحه ۲۶ از ۳۰</span></div>
+                    <h1>پرسش‌های متداول <span class="highlight">FAQ</span></h1>
+                </div>
+
+                <h2>سوال ۱: آیا می‌توانم از ماژول NRF24 معمولی استفاده کنم؟</h2>
+                <p>خیر، مدل معمولی (بدون PA+LNA) برد بسیار کمی دارد و برای این پروژه قابل استفاده نیست.</p>
+
+                <h2>سوال ۲: چرا TFT من کار نمی‌کند؟</h2>
+                <p>سه علت شایع دارد: ۱) تنظیمات درایور ST7789 در User_Setup.h فعال نیست. ۲) اتصالات CS، DC و RST اشتباه است. ۳) تغذیه TFT پایدار نیست.</p>
+
+                <h2>سوال ۳: چرا پنل وب باز نمی‌شود؟</h2>
+                <p>به شبکه N3XUS متصل شوید و آدرس 192.168.4.1 را وارد کنید. فایروال را موقتاً غیرفعال کنید. مطمئن شوید که کد وب سرور به درستی آپلود شده است.</p>
+
+                <h2>سوال ۴: فریم‌ور روی ESP32 آپلود نمی‌شود؟</h2>
+                <p>دکمه BOOT را نگه دارید، EN را بزنید و رها کنید، سپس BOOT را رها کنید. پورت COM صحیح را انتخاب کنید. کابل USB را عوض کنید.</p>
+
+                <h2>سوال ۵: آیا می‌توان از این پروژه برای اهداف غیرآموزشی استفاده کرد؟</h2>
+                <p>خیر. این پروژه صرفاً برای اهداف آموزشی و تست امنیتی در محیط‌های کنترل‌شده طراحی شده است. استفاده غیرمجاز جرم محسوب می‌شود.</p>
+
+                <h2>سوال ۶: تفاوت بین ۱۲ حالت چیست؟</h2>
+                <p>هر یک از ۱۲ حالت برای یک هدف خاص طراحی شده است. حالت‌های Reconnaissance برای شناسایی، Attack برای حمله، Deception برای فریب و Omega برای ترکیب همه حالت‌ها کاربرد دارند.</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 27 — پروژه‌های پیشنهادی                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-26">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">پیشنهاد</span><span class="page-number">صفحه ۲۷ از ۳۰</span></div>
+                    <h1>پروژه‌های پیشنهادی <span class="highlight">ادامه مسیر</span></h1>
+                </div>
+                <p>پس از تکمیل پروژه N3XUS، می‌توانید پروژه‌های زیر را دنبال کنید:</p>
+
+                <h2>سطح مبتدی</h2>
+                <ul>
+                    <li><strong>کنترل LED با ESP32 از طریق وب</strong>: یک وب‌سرور ساده روی ESP32 راه‌اندازی کنید.</li>
+                    <li><strong>ساخت فرستنده دما و رطوبت بی‌سیم</strong>: با ESP32 و NRF24 داده‌ها را ارسال کنید.</li>
+                    <li><strong>راه‌اندازی OLED با ESP32</strong>: اطلاعات ساده را روی OLED نمایش دهید.</li>
+                </ul>
+
+                <h2>سطح متوسط</h2>
+                <ul>
+                    <li><strong>سیستم هشداردهنده بی‌سیم</strong>: با سنسورهای PIR و NRF24 یک سیستم امنیتی بسازید.</li>
+                    <li><strong>کنترل رباتیک با ESP32 و NRF24</strong>: یک ربات را از راه دور کنترل کنید.</li>
+                    <li><strong>ذخیره‌سازی داده‌ها روی SD Card</strong>: داده‌های سنسورها را ذخیره کنید.</li>
+                </ul>
+
+                <h2>سطح پیشرفته</h2>
+                <ul>
+                    <li><strong>طراحی شبکه مش (Mesh Network)</strong>: چندین ESP32 را به صورت مش به هم متصل کنید.</li>
+                    <li><strong>پیاده‌سازی پروتکل MQTT</strong>: داده‌ها را به یک سرور مرکزی ارسال کنید.</li>
+                    <li><strong>ساخت اسپکتروم آنالایزر کامل</strong>: با استفاده از CC1101 و NRF24.</li>
+                </ul>
+
+                <div class="info-box">
+                    <span class="box-title">مسیر پیشنهادی</span>
+                    <p>پیشنهاد می‌کنم به ترتیب <strong>مبتدی → متوسط → پیشرفته</strong> پیش بروید. هر پروژه، دانش جدیدی به شما اضافه می‌کند.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 28 — درباره من                                              -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-27">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">درباره</span><span class="page-number">صفحه ۲۸ از ۳۰</span></div>
+                    <h1>درباره <span class="highlight">من</span></h1>
+                </div>
+                <p>سلام! من <strong>لیو (Leo)</strong> هستم، یک توسعه‌دهنده بک‌اند با بیش از ۴ سال سابقه کار حرفه‌ای. تخصص اصلی من در حوزه‌های <strong>امنیت سایبری</strong> و <strong>امنیت شبکه</strong> است و این پروژه را به دلیل ارتباط نزدیک آن با مفاهیم شبکه و امنیت، طراحی و اجرا کرده‌ام.</p>
+                <p>هدف من از نوشتن این کتاب، کمک به علاقه‌مندان حوزه امنیت و شبکه است تا با یک پروژه عملی، درک بهتری از آسیب‌پذیری‌های شبکه‌های بی‌سیم پیدا کنند و بتوانند راه‌های مقابله با آنها را بیاموزند.</p>
+
+                <div class="info-box" style="border-right-color: #354AC4; background: var(--color-accent-light);">
+                    <span class="box-title">راه‌های ارتباط با من</span>
+                    <ul style="margin-top: 8px; list-style: none; padding-right: 0;">
+                        <li><strong>◆ گیت‌هاب:</strong> <a href="https://github.com/here-is-leo" target="_blank">github.com/here-is-leo</a></li>
+                        <li><strong>◆ تلگرام:</strong> <a href="t.me/Here_is_leo" target="_blank">t.me/Here_is_leo</a></li>
+                        <li><strong>◆ ایمیل:</strong> <a href="mailto:ilyafarahanii@gmail.com">ilyafarahanii@gmail.com</a></li>
+                        <li><strong>◆ وب‌سایت:</strong> <a href="https://here-is-leo-blog.ilyafarahanii.workers.dev/" target="_blank">here-is-leo-blog.ilyafarahanii.workers.dev</a></li>
+                    </ul>
+                </div>
+
+                <p style="font-style:italic; color:var(--color-text-muted); text-align:center;">"امنیت یک محصول نیست، بلکه یک فرآیند است." — بروس شنایر</p>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 29 — پس‌گفتار                                              -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-28">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">پایان</span><span class="page-number">صفحه ۲۹ از ۳۰</span></div>
+                    <h1>پس‌گفتار <span class="highlight">سپاسگزاری و دعوت به همکاری</span></h1>
+                </div>
+                <p>از اینکه این کتاب را تا انتها همراهی کردید، صمیمانه سپاسگزارم. امیدوارم که مطالب آن برای شما مفید بوده باشد و بتوانید از دانش کسب‌شده در پروژه‌های آینده خود استفاده کنید.</p>
+                <p>اگر این کتاب برای شما مفید بود، لطفاً آن را با دوستان خود به اشتراک بگذارید. همچنین، از شما دعوت می‌کنم که در <strong>پروژه‌های آینده</strong> من مشارکت کنید.</p>
+
+                <!-- ===== DONATION BANNER ===== -->
+                <div class="donation-banner-wrapper">
+                    <div class="donation-banner">
+                        <div class="confetti-container">
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                            <div class="confetti"></div>
+                        </div>
+                        <div class="donation-content">
+                            <div class="donation-badge">
+                                <span class="dot"></span>
+                                <span>حمایت از تولید محتوا</span>
+                            </div>
+                            <h2 class="donation-title">
+                                اگر از محتوای من<br>
+                                <span class="highlight">لذت می‌برید</span>
+                            </h2>
+                            <p class="donation-sub">
+                                با <strong>یک قهوه ☕</strong> از من حمایت کنید تا<br>
+                                بتوانم محتوای باکیفیت‌تری تولید کنم.
+                            </p>
+                            <div class="donation-footer">
+                                <a href="https://www.coffeebede.com/leo" target="_blank" class="donate-btn" id="donateBtn">
+                                    <span class="icon">☕</span>
+                                    <span class="btn-text">برای من قهوه بخر</span>
+                                </a>
+                                <div class="donate-message">
+                                    <span class="emoji">🎊</span>
+                                    <span>هر قهوه = <span class="highlight-msg">یک جشن تازه</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <span class="box-title">دعوت به همکاری</span>
+                    <p>اگر ایده‌ای برای همکاری دارید یا می‌خواهید در پروژه‌های آینده من مشارکت کنید، خوشحال می‌شوم که با شما آشنا شوم. از طریق راه‌های ارتباطی که در صفحه «درباره من» آمده است، با من تماس بگیرید.</p>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- PAGE 30 — جمع‌بندی و منابع                                      -->
+            <!-- ============================================================ -->
+            <div class="page-content" id="page-29">
+                <div class="page-header">
+                    <div class="page-meta"><span class="page-tag">پایان</span><span class="page-number">صفحه ۳۰ از ۳۰</span></div>
+                    <h1>جمع‌بندی <span class="highlight">و منابع</span></h1>
+                </div>
+                <p>تبریک! شما یک پروژه جامع و پیشرفته را از صفر تا صد تکمیل کردید. در این مسیر، با مفاهیم کلیدی الکترونیک، برنامه‌نویسی و شبکه آشنا شدید و یک دستگاه کاربردی ساختید.</p>
+
+                <h2>مرور دستاوردها</h2>
+                <ul>
+                    <li><strong>پروتکل‌های ارتباطی</strong>: کار با SPI را به صورت عملی تجربه کردید.</li>
+                    <li><strong>سخت‌افزار</strong>: با قطعات مختلف (ESP32، NRF24، CC1101، TFT) و نحوه تغذیه و سیم‌بندی آنها آشنا شدید.</li>
+                    <li><strong>نرم‌افزار</strong>: با Arduino IDE، نصب کتابخانه‌ها و آپلود فریم‌ور مسلط شدید.</li>
+                    <li><strong>شبکه</strong>: یک وب‌سرور راه‌اندازی کرده و دستگاه را از طریق وای‌فای کنترل کردید.</li>
+                    <li><strong>۱۲ حالت عملیاتی</strong>: با انواع مختلف اسکن، حمله و فریب آشنا شدید.</li>
+                </ul>
+
+                <h2>منابع تکمیلی</h2>
+                <ul>
+                    <li><strong>مستندات ESP32:</strong> <a href="https://docs.espressif.com" target="_blank">docs.espressif.com</a></li>
+                    <li><strong>کتابخانه RF24:</strong> <a href="https://tmrh20.github.io/RF24" target="_blank">tmrh20.github.io/RF24</a></li>
+                    <li><strong>کتابخانه TFT_eSPI:</strong> <a href="https://github.com/Bodmer/TFT_eSPI" target="_blank">github.com/Bodmer/TFT_eSPI</a></li>
+                    <li><strong>کتابخانه ELECHOUSE_CC1101:</strong> <a href="https://github.com/iordic/ELECHOUSE_CC1101" target="_blank">github.com/iordic/ELECHOUSE_CC1101</a></li>
+                    <li><strong>مخزن پروژه N3XUS:</strong> <a href="https://github.com/here-is-leo/N3XUS" target="_blank">github.com/here-is-leo/N3XUS</a></li>
+                </ul>
+
+                <div class="info-box warning">
+                    <span class="box-title">تأکید بر نکات اخلاقی</span>
+                    <p>دانش و ابزاری که به دست آورده‌اید، قدرتمند است. از آن فقط برای <strong>اهداف آموزشی، تست امنیتی در محیط‌های مجاز و توسعه پروژه‌های قانونی</strong> استفاده کنید. هرگونه کاربرد مخرب یا غیرمجاز، مسئولیت قانونی و اخلاقی دارد.</p>
+                </div>
+
+                <p style="text-align:center; font-weight:700; margin-top:30px;">موفق و پیروز باشید</p>
+                <p style="text-align:center; font-size:0.9rem; color:var(--color-text-muted);">N3XUS v2.0 — سفر شما در دنیای جنگ الکترونیک آغاز شده است.</p>
+            </div>
+
+            <!-- ==========================================
+            NAVIGATION
+            ========================================== -->
+            <div class="nav-buttons">
+                <button id="prevBtn">قبلی</button>
+                <button id="nextBtn" class="primary-btn">بعدی</button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ==========================================
+    JAVASCRIPT
+    ========================================== -->
+    <script>
+        // ============================================
+        // STATE
+        // ============================================
+        const totalPages = 30;
+        let currentPage = 0;
+
+        // ============================================
+        // DOM REFS
+        // ============================================
+        const pages = document.querySelectorAll('.page-content');
+        const tocItems = document.querySelectorAll('.toc-list li');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const tocToggleBtn = document.getElementById('tocToggleBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+        const printBtn = document.getElementById('printBtn');
+        const printBtnSmall = document.getElementById('printBtnSmall');
+
+        // ============================================
+        // FUNCTIONS
+        // ============================================
+        function goToPage(index) {
+            if (index < 0 || index >= totalPages) return;
+            currentPage = index;
+
+            pages.forEach((page, i) => {
+                page.classList.toggle('active', i === currentPage);
+            });
+
+            tocItems.forEach((item, i) => {
+                item.classList.toggle('active', i === currentPage);
+            });
+
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+
+            const progress = ((currentPage + 1) / totalPages) * 100;
+            progressBar.style.width = progress + '%';
+            progressText.textContent = Math.round(progress) + '%';
+
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+
+            document.querySelector('.main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ============================================
+        // EVENTS
+        // ============================================
+        prevBtn.addEventListener('click', () => goToPage(currentPage - 1));
+        nextBtn.addEventListener('click', () => goToPage(currentPage + 1));
+
+        tocItems.forEach((item) => {
+            item.addEventListener('click', () => {
+                const index = parseInt(item.dataset.index);
+                goToPage(index);
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') goToPage(currentPage + 1);
+            if (e.key === 'ArrowLeft') goToPage(currentPage - 1);
+        });
+
+        tocToggleBtn.addEventListener('click', openSidebar);
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        printBtn.addEventListener('click', () => window.print());
+        printBtnSmall.addEventListener('click', () => window.print());
+
+        // ============================================
+        // INIT
+        // ============================================
+        goToPage(0);
+
+        // Ripple effect for donation button
+        document.addEventListener('DOMContentLoaded', function() {
+            const donateBtn = document.getElementById('donateBtn');
+            if (donateBtn) {
+                donateBtn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple-effect');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 800);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

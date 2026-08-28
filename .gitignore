@@ -1,0 +1,37 @@
+# Arduino
+*.ino.cpp
+*.ino.elf
+*.ino.hex
+*.ino.pde
+*.ino.with_bootloader.bin
+*.ino.bootloader.bin
+*.ino.partitions.bin
+*.ino.bin
+*.ino.elf
+build/
+build_*/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Personal
+*.secret
+*.password
+*.key
+*.pem
+*.crt
+
+# Logs
+*.log
+LOG.TXT
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
