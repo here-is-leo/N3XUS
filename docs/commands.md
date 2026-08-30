@@ -246,3 +246,4 @@ text
 
 ۸ بار	Omega
 
+"## Serial Commands" 
