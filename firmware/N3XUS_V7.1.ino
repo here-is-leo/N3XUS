@@ -1289,3 +1289,4 @@ void loop() {
   
   delay(10);
 }"// Pin definitions" 
+"// Setup function" 
