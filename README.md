@@ -1367,8 +1367,7 @@ git push origin feature/amazing-feature
 | کانال | لینک |
 |:---|:---|
 | 🐙 GitHub | [here-is-leo](https://github.com/here-is-leo) |
-| ✍️ وبلاگ | [here-is-leo-blog](https://here-is-leo-blog.ilyafarahanii.workers.dev) |
-| 📧 ایمیل | ilyafarahanii@gmail.com |
+| ✍️ Blog | [here-is-leo.ir](https://here-is-leo.ir) || 📧 ایمیل | ilyafarahanii@gmail.com |
 | 💬 تلگرام | [@here_is_leo](https://t.me/here_is_leo) |
 | 💼 لینکدین | [ilya-farahani](https://linkedin.com/in/ilya-farahani) |
 
